@@ -1,0 +1,121 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FHIR-R4-Practitioner-UKCore-Component
+paths: {}
+components:
+  schemas:
+    Practitioner:
+      description: |
+        Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals.
+      type: object
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-practitioner-library/1.0.4/fhir-r4-practitioner-library.yaml#/components/schemas/Practitioner'      
+      properties:
+        resourceType:
+          type: string
+          enum: [Practitioner]        
+        communication:
+          description: A language the practitioner is able to use in patient communication
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+            properties:
+              coding:
+                type: array
+                items:
+                  type: object
+                  allOf: 
+                    - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+                  properties:
+                    system:
+                      description: Identity of the terminology system
+                      type: string
+                      enum: [urn:ietf:bcp:47]
+      required:
+        - resourceType 
+        
+    
+    PractitionerEntry:
+      description: |
+        Entry in the bundle - will have a resource or information
+        + Rule: must be a resource unless there's a request or response
+        + Rule: fullUrl cannot be a version specific reference
+        This repeating element order: For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type
+      type: object
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Entry'
+      properties:
+        resource:
+          $ref: '#/components/schemas/Practitioner'
+    
+
+    
+    PractitionerBundle:
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Resource'
+      type: object
+      description: >
+        Contains a collection of resources
+        + Rule: total only when a search or history
+        + Rule: entry.search only when a search
+        + Rule: entry.request mandatory for batch/transaction/history, otherwise prohibited
+        + Rule: entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited
+        + Rule: FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)
+        + Rule: A document must have an identifier with a system and a value
+        + Rule: A document must have a date
+        + Rule: A document must have a Composition as the first resource
+        + Rule: A message must have a MessageHeader as the first resource
+        Elements defined in Ancestors: id, meta, implicitRules, language
+      properties:             
+        resourceType:
+          type: string
+          enum: [Bundle]
+        identifier:
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+          description: Persistent identifier for the bundle
+        type:
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/code'
+          description: document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
+          enum: [document, message, transaction, transaction-response, batch, batch-response, history, searchset, collection]
+        timestamp:
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/instant'
+          description: When the bundle was assembled
+        total:
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/unsignedInt'
+          description: If search, the total number of matches
+        link:
+          description: Links related to this Bundle
+          type: array
+          items:
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            type: object
+            properties:
+              relation:
+                type: string
+                description: See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+              url:
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/uri'
+                description: Reference details for the link
+            required:
+              - relation
+              - url
+        entry:
+          description: |
+            Entry in the bundle - will have a resource or information
+            + Rule: must be a resource unless there's a request or response
+            + Rule: fullUrl cannot be a version specific reference
+            This repeating element order: For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type
+          type: array
+          items:
+            $ref: '#/components/schemas/PractitionerEntry'
+        signature:
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Signature'
+          description: Digital Signature
+      required:
+        - type
+    
+   

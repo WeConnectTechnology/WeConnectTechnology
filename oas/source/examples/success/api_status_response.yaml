@@ -1,0 +1,13 @@
+value:
+  name: "ipaas-sap-sapi"
+  status: "up"
+  timestamp: "2025-12-04T23:54:20.300735795Z"
+  hostname: "ipaas-availability-fhir-eapi-dev"
+  businessGroupId: "SPIRE-IT"
+  environmentId: "9903e060-a7fc-11ef-ae3b-849437d7a58f"
+  ip: "100.64.162.220"
+  node: "0"
+  muleVersion: "4.9.11"
+  javaVersion: "17.0.15"
+  cpu: "1"
+  memory: "500 MB"

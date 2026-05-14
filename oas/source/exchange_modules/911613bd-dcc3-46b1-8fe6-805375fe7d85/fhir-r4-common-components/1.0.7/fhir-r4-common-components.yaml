@@ -1,0 +1,3599 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: fhir-common-components
+paths: {}
+components:
+  schemas:
+    Extension:
+      description: >
+        Optional Extensions Element + Rule Must have either extensions or
+        value[x], not both Elements defined in Ancestors id, extension
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/enumvalueInteger"
+        - $ref: "#/components/schemas/enumvalueDecimal"
+        - $ref: "#/components/schemas/enumvalueDateTime"
+        - $ref: "#/components/schemas/enumvalueDate"
+        - $ref: "#/components/schemas/enumvalueInstant"
+        - $ref: "#/components/schemas/enumvalueString"
+        - $ref: "#/components/schemas/enumvalueUri"
+        - $ref: "#/components/schemas/enumvalueBoolean"
+        - $ref: "#/components/schemas/enumvalueCode"
+        - $ref: "#/components/schemas/enumvalueBase64Binary"
+        - $ref: "#/components/schemas/enumvalueCoding"
+        - $ref: "#/components/schemas/enumvalueCodeableConcept"
+        - $ref: "#/components/schemas/enumvalueAttachment"
+        - $ref: "#/components/schemas/enumvalueIdentifier"
+        - $ref: "#/components/schemas/enumvalueQuantity"
+        - $ref: "#/components/schemas/enumvalueRange"
+        - $ref: "#/components/schemas/enumvaluePeriod"
+        - $ref: "#/components/schemas/enumvalueRatio"
+        - $ref: "#/components/schemas/enumvalueHumanName"
+        - $ref: "#/components/schemas/enumvalueAddress"
+        - $ref: "#/components/schemas/enumvalueContactPoint"
+        - $ref: "#/components/schemas/enumvalueReference"
+        - $ref: "#/components/schemas/enumvalueCanonical"
+        - $ref: "#/components/schemas/enumvalueId"
+        - $ref: "#/components/schemas/enumvalueMarkdown"
+        - $ref: "#/components/schemas/enumvalueOid"
+        - $ref: "#/components/schemas/enumvaluePositiveInt"
+        - $ref: "#/components/schemas/enumvalueTime"
+        - $ref: "#/components/schemas/enumvalueUnsignedInt"
+        - $ref: "#/components/schemas/enumvalueUrl"
+        - $ref: "#/components/schemas/enumvalueUuid"
+        - $ref: "#/components/schemas/enumvalueAge"
+        - $ref: "#/components/schemas/enumvalueAnnotation"
+        - $ref: "#/components/schemas/enumvalueCount"
+        - $ref: "#/components/schemas/enumvalueDistance"
+        - $ref: "#/components/schemas/enumvalueDuration"
+        - $ref: "#/components/schemas/enumvalueMoney"
+        - $ref: "#/components/schemas/enumvalueSampledData"
+        - $ref: "#/components/schemas/enumvalueSignature"
+        - $ref: "#/components/schemas/enumvalueTiming"
+        - $ref: "#/components/schemas/enumvalueContactDetail"
+        - $ref: "#/components/schemas/enumvalueContributor"
+        - $ref: "#/components/schemas/enumvalueDataRequirement"
+        - $ref: "#/components/schemas/enumvalueExpression"
+        - $ref: "#/components/schemas/enumvalueParameterDefinition"
+        - $ref: "#/components/schemas/enumvalueRelatedArtifact"
+        - $ref: "#/components/schemas/enumvalueTriggerDefinition"
+        - $ref: "#/components/schemas/enumvalueUsageContext"
+        - $ref: "#/components/schemas/enumvalueDosage"
+        - $ref: "#/components/schemas/enumvalueMeta"
+      properties:           
+        extension:
+          $ref: "#/components/schemas/extension"  
+        url:
+          description: identifies the meaning of the extension
+          type: string
+        id:
+          description: Internal id
+          pattern: ^[A-Za-z0-9\-\.]{1,64}$
+          type: string 
+      required:
+        - url
+    extension:
+      description: >
+        Additional Content defined by implementations - from Element: extension
+        (recursive)
+      type: array
+      items:
+        $ref: "#/components/schemas/Extension"
+    decimal:
+      description: |
+        Rational numbers that have a decimal representation. See below about the precision of the number.
+        Regex: -?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?
+      type: number
+    uri:
+      description: |
+        A Uniform Resource Identifier Reference (see: https://tools.ietf.org/html/rfc3986).
+        Note: URIs are case sensitive. For UUID (urn:uuid:53fefa32-fcbb-4ff8-8a92-55ee120877b7) use all lowercase.
+        URIs can be absolute or relative, and may have an optional fragment identifier.
+        Regex: \S*
+      type: string
+    url:
+      description: |
+        A Uniform Resource Locator (RFC 1738 ). Note URLs are accessed directly using the specified protocol. Common URL protocols are http{s}:, ftp:, mailto: and mllp:, though many others are defined.
+      type: string
+    canonical:
+      description: |
+        A URI that refers to a resource by its canonical URL (resources with a url property). The canonical type differs from a uri in that it has special meaning in this specification, and in that it may have a version appended, separated by a vertical bar (|). Note that the type canonical is not used for the actual canonical URLs that are the target of these references, but for the URIs that refer to them, and may have the version suffix in them. Like other URIs, elements of type canonical may also have #fragment references
+      $ref: '#/components/schemas/uri'
+    base64Binary:
+      type: string
+      pattern: (\s*([0-9a-zA-Z\+\=]){4}\s*)+
+      description: |
+        There is no specified upper limit to the size of a binary, but systems will have to impose some implementation based limit to the size they support. This should be clearly documented, though there is no computable for this at this time    
+    instant:
+      type: string
+      pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))))$
+      description: |
+        An instant in time - known at least to the second and always includes a time zone.
+        Note: This is intended for precisely observed times (typically system logs etc.), and not human-reported times - for them, use date and dateTime. instant is a more constrained dateTime.
+        Note: This type is for system times, not human times (see date and dateTime).      
+    date:
+      type: string
+      pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1]))?)?$
+      description: |
+        A date, or partial date (e.g. just year or year + month) as used in human communication. There is no time zone. Dates SHALL be valid dates
+      example: '1970-08-07'      
+    dateTime:
+      type: string
+      pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$
+      description: |
+        A date, date-time or partial date (e.g. just year or year + month) as used in human communication. If hours and minutes are specified, a time zone SHALL be populated.
+        Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored. Dates SHALL be valid dates. The time "24:00" is not allowed      
+    time:
+      type: string
+      pattern: ([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?
+      description: |
+        A time during the day, with no date specified (can be converted to a Duration since midnight).
+        Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.
+        The time "24:00" is not allowed, and neither is a time zone.      
+    code:
+      type: string
+      pattern: ^[^\s]+([\s]+[^\s]+)*
+      description: |
+        Indicates that the value is taken from a set of controlled strings defined elsewhere (see Using codes for further discussion).
+        Technically, a code is restricted to a string which has at least one character and no leading or trailing whitespace, and where there is no whitespace other than single spaces in the contents.      
+    oid:
+      type: string
+      pattern: urn:oid:[0-2](\.(0|[1-9][0-9]*))+
+      description: |
+        An OID represented as a URI (RFC 3001 ); e.g. urn:oid:1.2.3.4.5      
+    id:
+      type: string
+      pattern: ^[A-Za-z0-9\-\.]{1,64}$
+      description: |
+        Any combination of upper or lower case ASCII letters ('A'..'Z', and 'a'..'z', numerals ('0'..'9'), '-' and '.', with a length limit of 64 characters.
+        (This might be an integer, an un-prefixed OID, UUID or any other identifier pattern that meets these constraints.)      
+    markdown:
+      type: string
+      pattern: \s*(\S|\s)*
+      description: A FHIR string (see above) that may contain markdown syntax for optional processing by a markdown presentation engine, in the GFM extension of CommonMark format      
+    unsignedInt:
+      type: integer
+      minimum: 0
+      description: Any non-negative integer (e.g. >= 0) Regex - [0]|([1-9][0-9]*)      
+    positiveInt:
+      type: integer
+      minimum: 1
+      description: Any positive integer (e.g. >= 1) Regex - +?[1-9][0-9]*      
+    uuid:
+      type: string
+      pattern: urn:uuid:^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+      description: |
+        A UUID (aka GUID) represented as a URI (RFC 4122 ); e.g. urn:uuid:c757873d-ec9a-4326-a141-556f43239520      
+    dosageAsNeededBoolean:
+      type: object
+      properties:
+        asNeededBoolean:
+          description: Take "as needed"
+          type: boolean   
+    dosageAsNeededCodeableConcept:
+      type: object
+      properties:
+        asNeededCodeableConcept:
+          description: Take "as needed"
+          $ref: '#/components/schemas/CodeableConcept'  
+    dosageDoseRange:
+      type: object
+      properties:
+        doseRange:
+          description: Amount of medication per dose
+          $ref: '#/components/schemas/Range'      
+    dosageDoseQuantity:
+      type: object
+      properties:
+        doseQuantity:
+          description: Amount of medication per dose
+          $ref: '#/components/schemas/SimpleQuantity'      
+    dosageRateRatio:
+      type: object
+      properties:
+        rateRatio:
+          description: Amount of medication per unit of timen
+          $ref: '#/components/schemas/Ratio'      
+    dosageRateRange:
+      type: object
+      properties:
+        rateRange:
+          description: Amount of medication per unit of time
+          $ref: '#/components/schemas/Range'      
+    dosageRateQuantity:
+      type: object
+      properties:
+        rateQuantity:
+          description: Amount of medication per unit of time
+          $ref: '#/components/schemas/SimpleQuantity'    
+    dosageAsNeeded:
+      oneOf:
+        - $ref: '#/components/schemas/dosageAsNeededBoolean'
+        - $ref: '#/components/schemas/dosageAsNeededCodeableConcept'
+    dosageRate:
+      oneOf:
+        - $ref: '#/components/schemas/dosageRateRatio'
+        - $ref: '#/components/schemas/dosageRateRange'
+        - $ref: '#/components/schemas/dosageRateQuantity'  
+    Dosage:
+      description: How the medication is/was taken or should be taken     
+      allOf:
+        - $ref: '#/components/schemas/BackboneElement'
+        - $ref: '#/components/schemas/dosageAsNeededBoolean'
+        - $ref: '#/components/schemas/dosageAsNeededCodeableConcept'
+      type: object
+      properties:
+        sequence:
+          description: The order of the dosage instructions
+          type: integer
+        text:
+          description: Free text dosage instructions e.g. SIG
+          type: string
+        additionalInstruction:
+          description: Supplemental instruction - e.g. "with meals"
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeableConcept'
+        patientInstruction:
+          description: Patient or consumer oriented instructions
+          type: string
+        timing:
+          description: When medication should be administered
+          $ref: '#/components/schemas/Timing'        
+        site:
+          description: Body site to administer to
+          $ref: '#/components/schemas/CodeableConcept'
+        route:
+          description: How drug should enter body
+          $ref: '#/components/schemas/CodeableConcept'
+        method:
+          description: Technique for administering medication
+          $ref: '#/components/schemas/CodeableConcept'
+        doseAndRate:
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '#/components/schemas/Element'
+              - $ref: '#/components/schemas/dosageRateRatio'
+              - $ref: '#/components/schemas/dosageRateRange'
+              - $ref: '#/components/schemas/dosageRateQuantity'
+            properties:
+              type:
+                description: The kind of dose or rate specified
+                $ref: '#/components/schemas/CodeableConcept'
+        maxDosePerPeriod:
+          description: Upper limit on medication per unit of time
+          $ref: '#/components/schemas/Ratio'
+        maxDosePerAdministration:
+          description: Upper limit on medication per administration
+          $ref: '#/components/schemas/SimpleQuantity'
+        maxDosePerLifetime:
+          description: Upper limit on medication per lifetime of the patient
+          $ref: '#/components/schemas/SimpleQuantity'  
+    
+      
+    xhtml:
+      description: |
+        Limited xhtml content (Escaped XHTML)
+      type: string
+    Narrative:
+      type: object
+      description: |
+        Any resource that is a DomainResource (almost all types of resource) may include a human-readable narrative that contains a summary of the resource,
+        and may be used to represent the content of the resource to a human.
+      properties:
+        status:
+          allOf:
+            - $ref: '#/components/schemas/code'     
+            - enum:
+              - generated
+              - extensio ns
+              - additional
+              - empty          
+        div:
+          description: Limited xhtml content
+          $ref: '#/components/schemas/xhtml'
+      required:
+        - status
+        - div      
+    Meta:
+      description: |
+        Each resource contains an element "meta", of type "Meta", which is a set of metadata that provides technical and workflow context to the resource.
+        The metadata items are all optional, though some or all of them may be required in particular implementations or contexts of use.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        versionId:
+          description: Version specific identifier
+          $ref: '#/components/schemas/id'
+        lastUpdated:
+          description: When the resource version last changed
+          $ref: '#/components/schemas/instant'
+        source:
+          description: Identifies where the resource comes from
+          $ref: '#/components/schemas/uri'
+        profile:
+          description: Profiles this resource claims to conform to
+          type: array
+          items:
+            $ref: '#/components/schemas/canonical'
+        security:
+          description: Security Labels applied to this resource
+          type: array
+          items:
+            $ref: '#/components/schemas/Coding'
+        tag:
+              description: Tags applied to this resource
+              type: array
+              items:
+                $ref: '#/components/schemas/Coding'      
+    ContactDetail:
+      description: |
+        Contact information Elements defined in Ancestors: id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        name:
+          description: Name of an individula to contact
+          type: string
+        telecom:
+          description: Contact details for individual or organization
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPoint'      
+    Age:
+      description: An age value
+      $ref: '#/components/schemas/Quantity'
+    SimpleQuantity:
+      description: The comparator is not used on a SimpleQuantity
+      $ref: '#/components/schemas/Quantity'
+    Distance:
+      description: A distance value
+      $ref: '#/components/schemas/Quantity'
+    Count:
+      description: A count value
+      $ref: '#/components/schemas/Quantity'
+    Reference:
+      description: Many of the defined elements in a resource are references to other resources. Using these references, the resources combine to build a web of information about healthcare.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        reference:
+          description: Literal reference, Relative, internal or absolute URL
+          type: string
+        identifier:
+          description: Logical reference, when literal reference is not known
+          $ref: '#/components/schemas/Identifier'
+        display:
+          description: Text alternative for the resource
+          type: string
+        type:
+          description: Type the reference refers to (e.g. "Patient")
+          $ref: '#/components/schemas/uri'      
+    Element:
+      type: object
+      properties:
+        id:
+          description: Internal id
+          $ref: '#/components/schemas/id'
+        extension:
+          description: |
+            Additional Content defined by implementations - from Element: extension (recursive)
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+    enumvalueInteger:
+      type: object
+      properties:
+        valueInteger:
+          description: Value of extension.
+          type: integer
+    enumvalueDecimal:
+      type: object
+      properties:
+        valueDecimal:
+          description: Value of extension.
+          $ref: '#/components/schemas/decimal'
+    enumvalueDateTime:
+      type: object
+      properties:
+        valueDateTime:
+          description: Value of extension.
+          $ref: '#/components/schemas/dateTime'
+    enumvalueDate:
+      type: object
+      properties:
+        valueDate:
+          description: Value of extension.
+          $ref: '#/components/schemas/date'
+    enumvalueInstant:
+      type: object
+      properties:
+        valueInstant:
+          description: Value of extension.
+          $ref: '#/components/schemas/instant'
+    enumvalueString:
+      type: object
+      properties:
+        valueString:
+          description: Value of extension.
+          type: string
+    enumvalueUri:
+      type: object
+      properties:
+        valueUri:
+          description: Value of extension.
+          $ref: '#/components/schemas/uri'
+    enumvalueBoolean:
+      type: object
+      properties:
+        valueBoolean:
+          description: Value of extension.
+          type: boolean
+    enumvalueCode:
+      type: object
+      properties:
+        valueCode:
+          description: Value of extension.
+          $ref: '#/components/schemas/code'
+    enumvalueBase64Binary:
+      type: object
+      properties:
+        valueBase64Binary:
+          description: Value of extension.
+          $ref: '#/components/schemas/base64Binary'
+    enumvalueCoding:
+      type: object
+      properties:
+        valueCoding:
+          description: Value of extension.
+          $ref: '#/components/schemas/Coding'
+    enumvalueCodeableConcept:
+      type: object
+      properties:
+        valueCodeableConcept:
+          description: Value of extension.
+          $ref: '#/components/schemas/CodeableConcept'
+    enumvalueAttachment:
+      type: object
+      properties:
+        valueAttachment:
+          description: Value of extension.
+          $ref: '#/components/schemas/Attachment'
+    enumvalueIdentifier:
+      type: object
+      properties:
+        valueIdentifier:
+          description: Value of extension.
+          $ref: '#/components/schemas/Identifier'
+    enumvalueQuantity:
+      type: object
+      properties:
+        valueQuantity:
+          description: Value of extension.
+          $ref: '#/components/schemas/Quantity'
+    enumvalueRange:
+      type: object
+      properties:
+        valueRange:
+          description: Value of extension.
+          $ref: '#/components/schemas/Range'
+    enumvaluePeriod:
+      type: object
+      properties:
+        valuePeriod:
+          description: Value of extension.
+          $ref: '#/components/schemas/Period'
+    enumvalueRatio:
+      type: object
+      properties:
+        valueRatio:
+          description: Value of extension.
+          $ref: '#/components/schemas/Ratio'
+    enumvalueHumanName:
+      type: object
+      properties:
+        valueHumanName:
+          description: Value of extension.
+          $ref: '#/components/schemas/HumanName'
+    enumvalueAddress:
+      type: object
+      properties:
+        valueAddress:
+          description: Value of extension.
+          $ref: '#/components/schemas/Address'
+    enumvalueContactPoint:
+      type: object
+      properties:
+        valueContactPoint:
+          description: Value of extension.
+          $ref: '#/components/schemas/ContactPoint'
+    enumvalueReference:
+      type: object
+      properties:
+        valueReference:
+          description: Value of extension.
+          $ref: '#/components/schemas/Reference'
+    enumvalueCanonical:
+      type: object
+      properties:
+        valueCanonical:
+          description: Value of Extension
+          $ref: '#/components/schemas/canonical'
+    enumvalueId:
+      type: object
+      properties:
+        valueId:
+          description: Value of Extension
+          $ref: '#/components/schemas/id'
+    enumvalueMarkdown:
+      type: object
+      properties:
+        valueMarkdown:
+          description: Value of Extension
+          $ref: '#/components/schemas/markdown'
+    enumvalueOid:
+      type: object
+      properties:
+        valueOid:
+          description: Value of Extension
+          $ref: '#/components/schemas/oid'
+    enumvaluePositiveInt:
+      type: object
+      properties:
+        valuePositiveInt:
+          description: Value of Extension
+          $ref: '#/components/schemas/positiveInt'
+    enumvalueTime:
+      type: object
+      properties:
+        valueTime:
+          description: Value of Extension
+          $ref: '#/components/schemas/time'
+    enumvalueUnsignedInt:
+      type: object
+      properties:
+        valueUnsignedInt:
+          description: Value of Extension
+          $ref: '#/components/schemas/unsignedInt'
+    enumvalueUrl:
+      type: object
+      properties:
+        valueUrl:
+          description: Value of Extension
+          $ref: '#/components/schemas/url'
+    enumvalueUuid:
+      type: object
+      properties:
+        valueUuid:
+          description: Value of Extension
+          $ref: '#/components/schemas/uuid'
+    enumvalueAge:
+      type: object
+      properties:
+        valueAge:
+          description: Value of Extension
+          $ref: '#/components/schemas/Age'
+    enumvalueAnnotation:
+      type: object
+      properties:
+        valueAnnotation:
+          description: Value of Extension
+          $ref: '#/components/schemas/Annotation'
+    enumvalueCount:
+      type: object
+      properties:
+        valueCount:
+          description: Value of Extension
+          $ref: '#/components/schemas/Count'
+    enumvalueDistance:
+      type: object
+      properties:
+        valueDistance:
+          description: Value of Extension
+          $ref: '#/components/schemas/Distance'
+    enumvalueDuration:
+      type: object
+      properties:
+        valueDuration:
+          description: Value of Extension
+          $ref: '#/components/schemas/Duration'
+    enumvalueMoney:
+      type: object
+      properties:
+        valueMoney:
+          description: Value of Extension
+          $ref: '#/components/schemas/Money'
+    enumvalueSampledData:
+      type: object
+      properties:
+        valueSampledData:
+          description: Value of Extension
+          $ref: '#/components/schemas/SampledData'
+    enumvalueSignature:
+      type: object
+      properties:
+        valueSignature:
+          description: Value of Extension
+          $ref: '#/components/schemas/Signature'
+    enumvalueTiming:
+      type: object
+      properties:
+        valueTiming:
+          description: Value of Extension
+          $ref: '#/components/schemas/Timing'
+    enumvalueContactDetail:
+      type: object
+      properties:
+        valueContactDetail:
+          description: Value of Extension
+          $ref: '#/components/schemas/ContactDetail'
+    enumvalueContributor:
+      type: object
+      properties:
+        valueContributor:
+          description: Value of Extension
+          $ref: '#/components/schemas/Contributor'
+    enumvalueDataRequirement:
+      type: object
+      properties:
+        valueDataRequirement:
+          description: Value of Extension
+          $ref: '#/components/schemas/DataRequirement'
+    enumvalueExpression:
+      type: object
+      properties:
+        valueExpression:
+          description: Value of Extension
+          $ref: '#/components/schemas/Expression'
+    enumvalueParameterDefinition:
+      type: object
+      properties:
+        valueParameterDefinition:
+          description: Value of Extension
+          $ref: '#/components/schemas/ParameterDefinition'
+    enumvalueRelatedArtifact:
+      type: object
+      properties:
+        valueRelatedArtifact:
+          description: Value of Extension
+          $ref: '#/components/schemas/RelatedArtifact'
+    enumvalueTriggerDefinition:
+      type: object
+      properties:
+        valueTriggerDefinition:
+          description: Value of Extension
+          $ref: '#/components/schemas/TriggerDefinition'
+    enumvalueUsageContext:
+      type: object
+      properties:
+        valueUsageContext:
+          description: Value of Extension
+          $ref: '#/components/schemas/UsageContext'
+    enumvalueDosage:
+      type: object
+      properties:
+        valueDosage:
+          description: Value of Extension
+          $ref: '#/components/schemas/Dosage'
+    enumvalueMeta:
+      type: object
+      properties:
+        valueMeta:
+          description: Value of Extension
+          $ref: '#/components/schemas/Meta'
+    Duration:
+      description: a length of time
+      $ref: '#/components/schemas/Quantity'
+    UnitOfTime:
+      description: A unit of time (UCUM)
+      allOf:
+        - $ref: '#/components/schemas/code'     
+        - enum:
+          - s
+          - min
+          - h
+          - d
+          - wk
+          - mo
+          - a      
+    Range:
+      description: A set of ordered Quantity values defined by a low and high limit.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        low:
+          description: Low limit
+          $ref: '#/components/schemas/Quantity'
+        high:
+          description: High limit
+          $ref: '#/components/schemas/Quantity'      
+    Ratio:
+      description: A relationship between two Quantity values expressed as a numerator and a denominator.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        numerator:
+          description: Numerator value
+          $ref: '#/components/schemas/Quantity'
+        denominator:
+          description: Denominator value
+          $ref: '#/components/schemas/Quantity'      
+    annotationauthorReference:
+      type: object
+      properties:
+        authorReference:
+          description: Individual responsible for the annotation.
+          $ref: '#/components/schemas/Reference'    
+    annotationauthorString:
+      type: object
+      properties:
+        authorString:
+          description: Individual responsible for the annotation.
+          type: string    
+    Annotation:
+      description: A text note which also contains information about who made the statement and when.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+        - $ref: '#/components/schemas/annotationauthorReference'
+        - $ref: '#/components/schemas/annotationauthorString'
+      type: object
+      properties:       
+        time:
+          description: When the annotation was made
+          $ref: '#/components/schemas/dateTime'
+        text:
+          description: The annotation  - text content
+          type: string      
+    Period:
+      description: A time period defined by a start and end date/time.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        start:
+          description: Starting time with inclusive boundary
+          $ref: '#/components/schemas/dateTime'
+        end:
+          description: End time with inclusive boundary, if not ongoing
+          $ref: '#/components/schemas/dateTime'      
+    Attachment:
+      description: |
+        This type is for containing or referencing attachments - additional data content defined in other formats.
+        The most common use of this type is to include images or reports in some report format such as PDF.
+        However it can be used for any data that has a MIME type.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        contentType:
+          description: Mime type of the content, with charset etc.
+          $ref: '#/components/schemas/code'
+        language:
+          description: Human language of the content (BCP-47)
+          $ref: '#/components/schemas/code'
+        data:
+          description: Data inline, base64ed
+          $ref: '#/components/schemas/base64Binary'
+        url:
+          description: Uri where the data can be found
+          $ref: '#/components/schemas/uri'
+        size:
+          description: Number of bytes of content (if url provided)
+          $ref: '#/components/schemas/unsignedInt'
+        hash:
+          description: Hash of the data (sha-1, base64ed)
+          $ref: '#/components/schemas/base64Binary'
+        title:
+          description: Label to display in place of the data
+          type: string
+        creation:
+          description: Date attachment was first created
+          $ref: '#/components/schemas/dateTime'      
+    CodeableConcept:
+      description: |
+        A CodeableConcept represents a value that is usually supplied by providing a reference to one or more terminologies or ontologies, but may also be defined by the provision of text.
+        This is a common pattern in healthcare data.
+      type: object
+      properties:
+        id:
+          description: Internal id
+          $ref: '#/components/schemas/id'
+        extension:
+          description: |
+            Additional Content defined by implementations - from Element: extension (recursive)
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        coding:
+          description: Code defined by a terminology system
+          type: array
+          items:
+            $ref: '#/components/schemas/Coding'
+        text:
+          description: Plain text representation of the concept
+          type: string      
+    Coding:
+      description: |
+        A Coding is a representation of a defined concept using a symbol from a defined "code system".
+        See http://hl7.org/fhir/STU3/terminologies.html for more details.
+      type: object
+      properties:
+        id:
+          description: Internal id
+          $ref: '#/components/schemas/id'
+        extension:
+          description: |
+            Additional Content defined by implementations - from Element: extension (recursive)
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        system:
+          description: Identity of the terminology system
+          $ref: '#/components/schemas/uri'
+        version:
+          description: Version of the system - if relevant
+          type: string
+        code:
+          description: Symbol in syntax defined by the system
+          $ref: '#/components/schemas/code'
+        display:
+          description: Representation defined by the system
+          type: string
+        userSelected:
+          type: boolean
+    Quantity:
+      description: A measured amount (or an amount that can potentially be measured).
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        value:
+          description: Numerical value (with implicit precision)
+          $ref: '#/components/schemas/decimal'
+        comparator:
+          description: how to understand the value
+          type: string
+          enum: ['<', '<=', '>=', '>']
+        unit:
+          description: Unit representation
+          type: string
+        system:
+          description: System that defines coded unit form
+          $ref: '#/components/schemas/uri'
+        code:
+          description: Coded form of the unit
+          $ref: '#/components/schemas/code'      
+    Money:
+      description: |
+        An amount of economic utility in some recognized currency Elements defined in Ancestors: id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        value:
+          description: Numerical value (with implicit precision)
+          $ref: '#/components/schemas/decimal'
+        currency:
+          description: ISO 4217 Currency Code
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - AED
+              - AFN
+              - ALL
+              - AMD
+              - ANG
+              - AOA
+              - ARS
+              - AUD
+              - AWG
+              - AZN
+              - BAM
+              - BBD
+              - BDT
+              - BGN
+              - BHD
+              - BIF
+              - BMD
+              - BND
+              - BOB
+              - BOV
+              - BRL
+              - BSD
+              - BTN
+              - BWP
+              - BYN
+              - BZD
+              - CAD
+              - CDF
+              - CHE
+              - CHF
+              - CHW
+              - CLF
+              - CLP
+              - CNY
+              - COP
+              - COU
+              - CRC
+              - CUC
+              - CUP
+              - CVE
+              - CZK
+              - DJF
+              - DKK
+              - DOP
+              - DZD
+              - EGP
+              - ERN
+              - ETB
+              - EUR
+              - FJD
+              - FKP
+              - GBP
+              - GEL
+              - GGP
+              - GHS
+              - GIP
+              - GMD
+              - GNF
+              - GTQ
+              - GYD
+              - HKD
+              - HNL
+              - HRK
+              - HTG
+              - HUF
+              - IDR
+              - ILS
+              - IMP
+              - INR
+              - IQD
+              - IRR
+              - ISK
+              - JEP
+              - JMD
+              - JOD
+              - JPY
+              - KES
+              - KGS
+              - KHR
+              - KMF
+              - KPW
+              - KRW
+              - KWD
+              - KYD
+              - KZT
+              - LAK
+              - LBP
+              - LKR
+              - LRD
+              - LSL
+              - LYD
+              - MAD
+              - MDL
+              - MGA
+              - MKD
+              - MMK
+              - MNT
+              - MOP
+              - MRU
+              - MUR
+              - MVR
+              - MWK
+              - MXN
+              - MXV
+              - MYR
+              - MZN
+              - NAD
+              - NGN
+              - NIO
+              - NOK
+              - NPR
+              - NZD
+              - OMR
+              - PAB
+              - PEN
+              - PGK
+              - PHP
+              - PKR
+              - PLN
+              - PYG
+              - QAR
+              - RON
+              - RSD
+              - RUB
+              - RWF
+              - SAR
+              - SBD
+              - SCR
+              - SDG
+              - SEK
+              - SGD
+              - SHP
+              - SLL
+              - SOS
+              - SRD
+              - SSP
+              - STN
+              - SVC
+              - SYP
+              - SZL
+              - THB
+              - TJS
+              - TMT
+              - TND
+              - TOP
+              - TRY
+              - TTD
+              - TVD
+              - TWD
+              - TZS
+              - UAH
+              - UGX
+              - USD
+              - USN
+              - UYI
+              - UYU
+              - UZS
+              - VEF
+              - VND
+              - VUV
+              - WST
+              - XAF
+              - XAG
+              - XAU
+              - XBA
+              - XBB
+              - XBC
+              - XBD
+              - XCD
+              - XDR
+              - XOF
+              - XPD
+              - XPF
+              - XPT
+              - XSU
+              - XTS
+              - XUA
+              - XXX
+              - YER
+              - ZAR
+              - ZMW
+              - ZWL 
+    HumanName:
+      description: |
+        A name of a human with text, parts and usage information.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        use:
+          allOf:
+          - $ref: '#/components/schemas/code'
+          - enum:
+              - usual
+              - official
+              - temp
+              - nickname
+              - anonymous
+              - old
+              - maiden
+        text:
+          description: Text representation of the full name
+          type: string
+        family:
+          description: Family name (often called 'Surname')
+          type: string
+        given:
+          description: Given names (not always 'first'). Includes middle names
+          type: array
+          items:
+            type: string
+        prefix:
+          description: Parts that come before the name
+          type: array
+          items:
+            type: string
+        suffix:
+          description: Parts that come after the name
+          type: array
+          items:
+            type: string
+        period:
+          description: Time period when name was/is in use
+          $ref: '#/components/schemas/Period'      
+    Address:
+      description: |
+        An address expressed using postal conventions (as opposed to GPS or other location definition formats).
+        This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.
+        There are a variety of postal address formats defined around the world.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        use:
+          description: home | work | temp | old - purpose of this address
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - home
+              - work
+              - temp
+              - old
+              - billing
+        type:
+          description: address type
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - postal
+              - physical
+              - both
+        text:
+          description: Text representation of the address
+          type: string
+        line:
+          description: Street name, number, direction & P.O. Box etc.
+          type: array
+          items:
+            type: string
+        city:
+          description: Name of city, town etc.
+          type: string
+        district:
+          description: District name (aka county)
+          type: string
+        state:
+          description: Sub-unit of country (abbreviations ok)
+          type: string
+        postalCode:
+          description: Postal code for area
+          type: string
+        country:
+          description: Country (e.g. can be ISO 3166 2 or 3 letter code)
+          type: string
+        period:
+          description: Time period when address was/is in use
+          $ref: '#/components/schemas/Period'      
+    ContactPoint:
+      description: |
+        Details for all kinds of technology-mediated contact points for a person or organization, including telephone, email, etc.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        system:
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - phone
+              - fax
+              - email
+              - sms
+              - pager
+              - url
+              - other
+        value:
+          description: The actual contact point details
+          type: string
+        use:
+          description: purpose of this contact point
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - home
+              - work
+              - temp
+              - old
+              - mobile
+        rank:
+          description: Specify preferred order of use (1 = highest)
+          $ref: '#/components/schemas/positiveInt'
+        period:
+          description: Time period when the contact point was/is in use
+          $ref: '#/components/schemas/Period'      
+    BackboneElement:
+      type: object      
+      properties:
+        id:
+          description: Internal id
+          $ref: '#/components/schemas/id'
+        extension:
+          description: |
+            Additional Content defined by implementations - from Element: extension (recursive)
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        modifierExtension:
+          description: Modifier Extensions
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'      
+    timingboundsDuration:
+      type: object
+      properties:
+        boundsDuration:
+          description: Length/Range of lengths, or (Start and/or end) limits
+          $ref: '#/components/schemas/Duration'     
+    timingboundsRange:
+      type: object
+      properties:
+        boundsRange:
+          description: Length/Range of lengths, or (Start and/or end) limits
+          $ref: '#/components/schemas/Range'   
+    timingboundsPeriod:
+      type: object
+      properties:
+        boundsPeriod:
+          description: Length/Range of lengths, or (Start and/or end) limits
+          $ref: '#/components/schemas/Period'
+    Timing:
+      description: |
+        Specifies an event that may occur multiple times.
+        Timing schedules are used for specifying when events are expected or requested to occur, and may also be used to represent a schedule that was followed for past events.
+        A Timing schedule can be a list of events and/or criteria for when the event happens, which can be expressed in a structured form and/or as a code. When both event and a repeating specification are provided, the list of events should be understood as an interpretation of the information in the repeat structure.
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        event:
+          description: When the event occurs
+          type: array
+          items:
+            $ref: '#/components/schemas/dateTime'
+        repeat:
+          description: When the event is to occur
+          allOf:
+            - $ref: '#/components/schemas/Element'
+          type: object
+          properties:
+            boundsDuration:
+              description: Length/Range of lengths, or (Start and/or end) limits
+              $ref: '#/components/schemas/Duration'
+            boundsRange:
+              description: Length/Range of lengths, or (Start and/or end) limits
+              $ref: '#/components/schemas/Range'
+            boundsPeriod:
+              description: Length/Range of lengths, or (Start and/or end) limits
+              $ref: '#/components/schemas/Period'
+            count:
+              description: Number of times to repeat
+              $ref: '#/components/schemas/positiveInt'
+            countMax:
+              description: Maximum number of times to repeat
+              $ref: '#/components/schemas/positiveInt'
+            duration:
+              description: How long when it happens
+              $ref: '#/components/schemas/decimal'
+            durationMax:
+              description: How long when it happens (Max)
+              $ref: '#/components/schemas/decimal'
+            durationUnit:
+              description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+              $ref: '#/components/schemas/UnitOfTime'
+            frequency:
+              description: Event occurs frequency times per period
+              $ref: '#/components/schemas/positiveInt'
+            frequencyMax:
+              description: Event occurs up to frequencyMax times per period
+              $ref: '#/components/schemas/positiveInt'
+            period:
+              description: Event occurs frequency times per period
+              $ref: '#/components/schemas/decimal'
+            periodMax:
+              description: Upper limit of period (3-4 hours)
+              $ref: '#/components/schemas/decimal'
+            periodUnit:
+              description: s | min | h | d | wk | mo | a - unit of time (UCUM)
+              allOf:
+                - $ref: '#/components/schemas/code'
+                - enum:
+                  - s
+                  - min
+                  - h
+                  - d
+                  - wk
+                  - mo
+                  - a
+            dayOfWeek:
+              description: mon | tue | wed | thu | fri | sat | sun
+              type: array
+              items:
+                type: string
+                enum:
+                  - mon
+                  - tue
+                  - wed
+                  - thu
+                  - fri
+                  - sat
+                  - sun                
+            timeOfDay:
+              description: Time of day for action
+              type: array
+              items:
+                $ref: '#/components/schemas/time'
+            when:
+              description: Regular life events the event is tied to
+              type: array
+              items:
+                type: string
+                enum:
+                  - HS
+                  - WAKE
+                  - C
+                  - CM
+                  - CD
+                  - CV
+                  - AC
+                  - ACM
+                  - ACD
+                  - ACV
+                  - PC
+                  - PCM
+                  - PCD
+                  - PCV
+                  - MORN
+                  - MORN.early
+                  - MORN.late
+                  - NOON
+                  - AFT
+                  - AFT.early
+                  - AFT.late
+                  - EVE
+                  - EVE.early
+                  - EVE.late
+                  - NIGHT
+                  - PHS            
+            offset:
+              description: Minutes from event (before or after)
+              $ref: '#/components/schemas/unsignedInt'          
+        code:
+          description: BID | TID | QID | AM | PM | QD | QOD | Q1H | Q2H | Q3H | Q4H | Q6H | Q8H | BED | WK | MO
+          $ref: '#/components/schemas/CodeableConcept'      
+    SampledData:
+      description: A series of measurements taken by a device
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        origin:
+          description: Zero value and units
+          $ref: '#/components/schemas/Quantity'
+        period:
+          description: Number of milliseconds between samples
+          $ref: '#/components/schemas/decimal'
+        factor:
+          description: Multiply data by this before adding to origin
+          $ref: '#/components/schemas/decimal'
+        lowerLimit:
+          description: Lower limit of detection
+          $ref: '#/components/schemas/decimal'
+        upperLimit:
+          description: Upper limit of detection
+          $ref: '#/components/schemas/decimal'
+        dimensions:
+          description: Number of sample points at each time point
+          $ref: '#/components/schemas/positiveInt'
+        data:
+          description: Decimal values with spaces, or "E" | "U" | "L"
+          type: string
+          enum:
+            - E
+            - U
+            - L               
+      required:
+        - origin
+        - period
+        - dimensions
+    Signature:
+      description: |
+        A Signature holds an electronic representation of a signature and its supporting context in a FHIR accessible form.
+        The signature may either be a cryptographic type (XML DigSig or a JWT), which is able to provide non-repudiation proof, or it may be a graphical image that represents a signature or a signature process.
+      type: object  
+      properties:
+        type:
+          description: Indication of the reason the entity signed the object(s)
+          type: array
+          items:
+            $ref: '#/components/schemas/Coding'
+        when:
+          description: When the signature was created
+          $ref: '#/components/schemas/instant'
+        who:
+          description: Who signed
+          $ref: '#/components/schemas/Reference'
+        onBehalfOf:
+          description: The party represented
+          $ref: '#/components/schemas/Reference'
+        targetFormat:
+          description: The technical format of the signed resources
+          $ref: '#/components/schemas/code'
+        sigFormat:
+          description: The technical format of the signature
+          $ref: '#/components/schemas/code'
+        data:
+          description: The actual signature content (XML DigSig. JWT, picture, etc.)
+          $ref: '#/components/schemas/base64Binary'
+      required:
+        - type
+        - when
+        - who      
+    Identifier:
+      description: |
+        A numeric or alphanumeric string that is associated with a single object or entity within a given system.
+        Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols.
+        Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.
+      type: object
+      properties:
+        use:
+          description: usual | official | temp | secondary (If known)
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - usual
+              - official
+              - temp
+              - secondary
+              - old
+        type:
+          description: Description of identifier
+          $ref: '#/components/schemas/CodeableConcept'
+        system:
+          description: The namespace for the identifier value
+          $ref: '#/components/schemas/uri'
+        value:
+          description: The value that is unique
+          type: string
+        period:
+          description: Time period when id is/was valid for use
+          $ref: '#/components/schemas/Period'
+        assigner:
+          description: Organization that issued id (may be just text)
+          $ref: '#/components/schemas/assigner'     
+    assigner:
+      description: Organization that issued id (may be just text)
+      type: object
+      properties:
+        reference:
+          description: Literal reference, Relative, internal or absolute URL
+          type: string
+        extension:
+          $ref: "#/components/schemas/Extension"
+        identifier:
+          description: Logical reference, when literal reference is not known
+          type: object
+          properties:
+            use:
+              description: usual | official | temp | secondary (If known)
+              pattern: ^[^\s]+([\s]+[^\s]+)*$
+              enum:
+                - usual
+                - official
+                - temp
+                - secondary
+                - old
+              type: string
+            type:
+              description: Description of identifier
+              type: object
+              properties:
+                extension:
+                  $ref: "#/components/schemas/Extension"
+                id:
+                  description: Internal id
+                  pattern: ^[A-Za-z0-9\-\.]{1,64}$
+                  type: string
+                coding:
+                  description: Code defined by a terminology system
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Coding"
+                text:
+                  description: Plain text representation of the concept
+                  type: string
+            system:
+              description: The namespace for the identifier value
+              type: string
+            value:
+              description: The value that is unique
+              type: string
+            period:
+              description: Time period when id is/was valid for use
+              type: object
+              properties:
+                extension:
+                  $ref: "#/components/schemas/Extension"
+                id:
+                  description: Internal id
+                  pattern: ^[A-Za-z0-9\-\.]{1,64}$
+                  type: string
+                start:
+                  description: Starting time with inclusive boundary
+                  pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$
+                  type: string
+                end:
+                  description: End time with inclusive boundary, if not ongoing
+                  pattern: ^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$
+                  type: string
+            # _ has been added to fix the cyclic recursive error in AMF parser
+            assigner:
+              $ref: "#/components/schemas/assigner"
+        id:
+          description: Internal id
+          pattern: ^[A-Za-z0-9\-\.]{1,64}$
+          type: string
+        display:
+          description: Text alternative for the resource
+          type: string
+        type:
+          description: Type the reference refers to (e.g. "Patient")
+          type: string
+    Contributor:
+      description: Contributor information Elements defined in Ancestors id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        type:
+          description: author | editor | reviewer | endorser
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - author
+              - editor
+              - reviewer
+              - endorser
+        name:
+          description: Who contributed the content
+          type: string
+        contact:
+          description: Contact details of the contributor
+          type: string      
+    dataRequirementssubjectCodeableConcept:
+      type: object
+      properties:
+        subjectCodeableConcept:
+          description: E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+          $ref: '#/components/schemas/CodeableConcept' 
+    dataRequirementssubjectReference:
+      type: object
+      properties:
+        subjectReference:
+          description: E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+          $ref: '#/components/schemas/Reference'   
+    DataRequirement:
+      description: Describes a required data item Elements defined in Ancestors id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+        - $ref: '#/components/schemas/dataRequirementssubjectCodeableConcept'
+        - $ref: '#/components/schemas/dataRequirementssubjectReference'
+      type: object
+      properties:
+        type:
+          description: The type of the required data
+          $ref: '#/components/schemas/code'
+        profile:
+          description: The profile of the required data
+          type: array
+          items:
+            $ref: '#/components/schemas/canonical'        
+        mustSupport:
+          description: Indicates specific structure elements that are referenced by the knowledge module
+          type: array
+          items:
+            type: string
+        codeFilter:
+          description: What codes are expected + Rule Either a path or a searchParam must be provided, but not both
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              path:
+                description: A code-valued attribute to filter on
+                type: string
+              searchParam:
+                description: A coded (token) parameter to search on
+                type: string
+              valueSet:
+                description: Valueset for the filter
+                $ref: '#/components/schemas/canonical'
+              code:
+                description: What code is expected
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coding'            
+        dateFilter:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+              - $ref: '#/components/schemas/enumvalueDateTime'
+              - $ref: '#/components/schemas/enumvaluePeriod'
+              - $ref: '#/components/schemas/enumvalueDuration'
+            type: object
+            properties:
+              path:
+                description: A date-valued attribute to filter on
+                type: string
+              searchParam:
+                description: A date valued parameter to search on
+                type: string                         
+        limit:
+          description: Number of results
+          $ref: '#/components/schemas/positiveInt'
+        sort:
+          description: Order of the results
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              path:
+                description: The name of the attribute to perform the sort
+                type: string
+              direction:
+                description: ascending | descending
+                allOf:
+                  - $ref: '#/components/schemas/code'
+                  - enum:
+                    - ascending
+                    - descending
+            required:
+              - direction
+              - path      
+      required:
+        - type
+    Expression:
+      description: |
+        An expression that can be used to generate a value
+        + Rule: An expression or a reference must be provided
+        Elements defined in Ancestors: id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        description:
+          description: Natural language description of the condition
+          type: string
+        name:
+          description: Short name assigned to expression for reuse
+          $ref: '#/components/schemas/id'
+        language:
+          description: text/cql | text/fhirpath | application/x-fhir-query
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - text/cql
+              - text/fhirpath
+              - application/x-fhir-query
+        expression:
+          description: Expression in specified language
+          type: string
+        reference:
+          description: Where the expression is found
+          $ref: '#/components/schemas/uri'      
+    ParameterDefinition:
+      description: |
+        Definition of a parameter to a module
+        Elements defined in Ancestors: id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        name:
+          description: Name used to access the parameter value
+          $ref: '#/components/schemas/code'
+        use:
+          description: in | out
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - in
+              - out
+        min:
+          description: Minimum cardinality
+          type: integer
+        max:
+          description: Maximum cardinality (a number of *)
+          type: string
+        documentation:
+          description: A brief description of the parameter
+          type: string
+        type:
+          $ref: '#/components/schemas/code'
+        profile:
+          description: What profile the value is expected to be
+          $ref: '#/components/schemas/canonical'      
+    RelatedArtifact:
+      description: |
+        Related artifacts for a knowledge resource
+        Elements defined in Ancestors: id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+      type: object
+      properties:
+        type:
+          description: documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - documentation
+              - justification
+              - citation
+              - predecessor
+              - successor
+              - derived-from
+              - depends-on
+              - composed-of
+        label:
+          description: Short label
+          type: string
+        display:
+          description: Brief description of the related artifact
+          type: string
+        citation:
+          description: Bibliographic citation for the artifact
+          $ref: '#/components/schemas/markdown'
+        url:
+          description: Where the artifact can be accessed
+          $ref: '#/components/schemas/url'
+        document:
+          description: What document is being referenced
+          $ref: '#/components/schemas/Attachment'
+        resource:
+          description: What resource is being referenced
+          $ref: '#/components/schemas/canonical'      
+    triggerDefinitiontimingTiming:
+      type: object
+      properties:
+        timingTiming:
+          description: Timing of the event
+          $ref: '#/components/schemas/Timing'
+    triggerDefinitiontimingReference:
+      type: object
+      properties:
+        timingReference:
+          description: Timing of the event
+          $ref: '#/components/schemas/Reference'
+    triggerDefinitiontimingDate:
+      type: object
+      properties:
+        timingDate:
+          description: Timing of the event
+          $ref: '#/components/schemas/date'
+    triggerDefinitiontimingDateTime:
+      type: object
+      properties:
+        timingDateTime:
+          description: Timing of the event
+          $ref: '#/components/schemas/dateTime'
+    TriggerDefinition:
+      description: |
+        Defines an expected trigger for a module Rule Either timing, or a data requirement, but not both + Rule A condition only if there is a data requirement + Rule A named event requires a name, a periodic event requires timing, and a data event requires data Elements defined in Ancestors id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+        - $ref: '#/components/schemas/triggerDefinitiontimingTiming'
+        - $ref: '#/components/schemas/triggerDefinitiontimingReference'
+        - $ref: '#/components/schemas/triggerDefinitiontimingDate'
+        - $ref: '#/components/schemas/triggerDefinitiontimingDateTime'
+      type: object
+      properties:
+        type:
+          description: named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - named-event
+              - periodic
+              - data-changed
+              - data-added
+              - data-modified
+              - data-removed
+              - data-accessed
+              - data-access-ended
+        name:
+          description: Name or URI that identifies the event
+          type: string        
+        data:
+          description: Triggering data of the event (multiple = 'and')
+          type: array
+          items:
+            $ref: '#/components/schemas/DataRequirement'
+        condition:
+          description: Whether the event triggers (boolean expression)
+          $ref: '#/components/schemas/Expression'      
+    UsageContext:
+      description: Describes the context of use for a conformance or knowledge resource Elements defined in Ancestors id, extension
+      allOf:
+        - $ref: '#/components/schemas/Element'
+        - $ref: '#/components/schemas/enumvalueCodeableConcept'
+        - $ref: '#/components/schemas/enumvalueQuantity'
+        - $ref: '#/components/schemas/enumvalueRange'
+        - $ref: '#/components/schemas/enumvalueReference'
+      type: object
+      properties:
+        code:
+          description: Type of context being specified
+          $ref: '#/components/schemas/Coding'        
+    defaultvalueInteger:
+      type: object
+      properties:
+        defaultValueInteger:
+          description: Value of extension.
+          type: integer
+    defaultvalueDecimal:
+      type: object
+      properties:
+        defaultValueDecimal:
+          description: Value of extension.
+          $ref: '#/components/schemas/decimal'
+    defaultvalueDateTime:
+      type: object
+      properties:
+        defaultValueDateTime:
+          description: Value of extension.
+          $ref: '#/components/schemas/dateTime'
+    defaultvalueDate:
+      type: object
+      properties:
+        defaultValueDate:
+          description: Value of extension.
+          $ref: '#/components/schemas/date'
+    defaultvalueInstant:
+      type: object
+      properties:
+        defaultValueInstant:
+          description: Value of extension.
+          $ref: '#/components/schemas/instant'
+    defaultvalueString:
+      type: object
+      properties:
+        defaultValueString:
+          description: Value of extension.
+          type: string
+    defaultvalueUri:
+      type: object
+      properties:
+        defaultValueUri:
+          description: Value of extension.
+          $ref: '#/components/schemas/uri'
+    defaultvalueBoolean:
+      type: object
+      properties:
+        defaultValueBoolean:
+          description: Value of extension.
+          type: boolean
+    defaultvalueCode:
+      type: object
+      properties:
+        defaultValueCode:
+          description: Value of extension.
+          $ref: '#/components/schemas/code'
+    defaultvalueBase64Binary:
+      type: object
+      properties:
+        defaultValueBase64Binary:
+          description: Value of extension.
+          $ref: '#/components/schemas/base64Binary'
+    defaultvalueCoding:
+      type: object
+      properties:
+        defaultValueCoding:
+          description: Value of extension.
+          $ref: '#/components/schemas/Coding'
+    defaultvalueCodeableConcept:
+      type: object
+      properties:
+        defaultValueCodeableConcept:
+          description: Value of extension.
+          $ref: '#/components/schemas/CodeableConcept'
+    defaultvalueAttachment:
+      type: object
+      properties:
+        defaultValueAttachment:
+          description: Value of extension.
+          $ref: '#/components/schemas/Attachment'
+    defaultvalueIdentifier:
+      type: object
+      properties:
+        defaultValueIdentifier:
+          description: Value of extension.
+          $ref: '#/components/schemas/Identifier'
+    defaultvalueQuantity:
+      type: object
+      properties:
+        defaultValueQuantity:
+          description: Value of extension.
+          $ref: '#/components/schemas/Quantity'
+    defaultvalueRange:
+      type: object
+      properties:
+        defaultValueRange:
+          description: Value of extension.
+          $ref: '#/components/schemas/Range'
+    defaultvaluePeriod:
+      type: object
+      properties:
+        defaultValuePeriod:
+          description: Value of extension.
+          $ref: '#/components/schemas/Period'
+    defaultvalueRatio:
+      type: object
+      properties:
+        defaultValueRatio:
+          description: Value of extension.
+          $ref: '#/components/schemas/Range'
+    defaultvalueHumanName:
+      type: object
+      properties:
+        defaultValueHumanName:
+          description: Value of extension.
+          $ref: '#/components/schemas/HumanName'
+    defaultvalueAddress:
+      type: object
+      properties:
+        defaultValueAddress:
+          description: Value of extension.
+          $ref: '#/components/schemas/Address'
+    defaultvalueContactPoint:
+      type: object
+      properties:
+        defaultValueContactPoint:
+          description: Value of extension.
+          $ref: '#/components/schemas/ContactPoint'
+    defaultvalueReference:
+      type: object
+      properties:
+        defaultValueReference:
+          description: Value of extension.
+          $ref: '#/components/schemas/Reference'
+    defaultvalueCanonical:
+      type: object
+      properties:
+        defaultValueCanonical:
+          description: Value of Extension
+          $ref: '#/components/schemas/canonical'
+    defaultvalueId:
+      type: object
+      properties:
+        defaultValueId:
+          description: Value of Extension
+          $ref: '#/components/schemas/id'
+    defaultvalueMarkdown:
+      type: object
+      properties:
+        defaultValueMarkdown:
+          description: Value of Extension
+          $ref: '#/components/schemas/markdown'
+    defaultvalueOid:
+      type: object
+      properties:
+        defaultValueOid:
+          description: Value of Extension
+          $ref: '#/components/schemas/oid'
+    defaultvaluePositiveInt:
+      type: object
+      properties:
+        defaultValuePositiveInt:
+          description: Value of Extension
+          $ref: '#/components/schemas/positiveInt'
+    defaultvalueTime:
+      type: object
+      properties:
+        defaultValueTime:
+          description: Value of Extension
+          $ref: '#/components/schemas/time'
+    defaultvalueUnsignedInt:
+      type: object
+      properties:
+        defaultValueUnsignedInt:
+          description: Value of Extension
+          $ref: '#/components/schemas/unsignedInt'
+    defaultvalueUrl:
+      type: object
+      properties:
+        defaultValueUrl:
+          description: Value of Extension
+          $ref: '#/components/schemas/url'
+    defaultvalueUuid:
+      type: object
+      properties:
+        defaultValueUuid:
+          description: Value of Extension
+          $ref: '#/components/schemas/uuid'
+    defaultvalueAge:
+      type: object
+      properties:
+        defaultValueAge:
+          description: Value of Extension
+          $ref: '#/components/schemas/Age'
+    defaultvalueAnnotation:
+      type: object
+      properties:
+        defaultValueAnnotation:
+          description: Value of Extension
+          $ref: '#/components/schemas/Annotation'
+    defaultvalueCount:
+      type: object
+      properties:
+        defaultValueCount:
+          description: Value of Extension
+          $ref: '#/components/schemas/Count'
+    defaultvalueDistance:
+      type: object
+      properties:
+        defaultValueDistance:
+          description: Value of Extension
+          $ref: '#/components/schemas/Distance'
+    defaultvalueDuration:
+      type: object
+      properties:
+        defaultValueDuration:
+          description: Value of Extension
+          $ref: '#/components/schemas/Duration'
+    defaultvalueMoney:
+      type: object
+      properties:
+        defaultValueMoney:
+          description: Value of Extension
+          $ref: '#/components/schemas/Money'
+    defaultvalueSampledData:
+      type: object
+      properties:
+        defaultValueSampledData:
+          description: Value of Extension
+          $ref: '#/components/schemas/SampledData'
+    defaultvalueSignature:
+      type: object
+      properties:
+        defaultValueSignature:
+          description: Value of Extension
+          $ref: '#/components/schemas/Signature'
+    defaultvalueTiming:
+      type: object
+      properties:
+        defaultValueTiming:
+          description: Value of Extension
+          $ref: '#/components/schemas/Timing'
+    defaultvalueContactDetail:
+      type: object
+      properties:
+        defaultValueContactDetail:
+          description: Value of Extension
+          $ref: '#/components/schemas/ContactDetail'
+    defaultvalueContributor:
+      type: object
+      properties:
+        defaultValueContributor:
+          description: Value of Extension
+          $ref: '#/components/schemas/Contributor'
+    defaultvalueDataRequirement:
+      type: object
+      properties:
+        defaultValueDataRequirement:
+          description: Value of Extension
+          $ref: '#/components/schemas/DataRequirement'
+    defaultvalueExpression:
+      type: object
+      properties:
+        defaultValueExpression:
+          description: Value of Extension
+          $ref: '#/components/schemas/Expression'
+    defaultvalueParameterDefinition:
+      type: object
+      properties:
+        defaultValueParameterDefinition:
+          description: Value of Extension
+          $ref: '#/components/schemas/ParameterDefinition'
+    defaultvalueRelatedArtifact:
+      type: object
+      properties:
+        defaultValueRelatedArtifact:
+          description: Value of Extension
+          $ref: '#/components/schemas/RelatedArtifact'
+    defaultvalueTriggerDefinition:
+      type: object
+      properties:
+        defaultValueTriggerDefinition:
+          description: Value of Extension
+          $ref: '#/components/schemas/TriggerDefinition'
+    defaultvalueUsageContext:
+      type: object
+      properties:
+        defaultValueUsageContext:
+          description: Value of Extension
+          $ref: '#/components/schemas/UsageContext'
+    defaultvalueDosage:
+      type: object
+      properties:
+        defaultValueDosage:
+          description: Value of Extension
+          $ref: '#/components/schemas/Dosage'
+    defaultvalueMeta:
+      type: object
+      properties:
+        defaultValueMeta:
+          description: Value of Extension
+          $ref: '#/components/schemas/Meta'
+    fixedvalueInteger:
+      type: object
+      properties:
+        fixedValueInteger:
+          description: Value must be exactly this
+          type: integer
+    fixedvalueDecimal:
+      type: object
+      properties:
+        fixedValueDecimal:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/decimal'
+    fixedvalueDateTime:
+      type: object
+      properties:
+        fixedValueDateTime:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/dateTime'
+    fixedvalueDate:
+      type: object
+      properties:
+        fixedValueDate:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/date'
+    fixedvalueInstant:
+      type: object
+      properties:
+        fixedValueInstant:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/instant'
+    fixedvalueString:
+      type: object
+      properties:
+        fixedValueString:
+          description: Value must be exactly this
+          type: string
+    fixedvalueUri:
+      type: object
+      properties:
+        fixedValueUri:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/uri'
+    fixedvalueBoolean:
+      type: object
+      properties:
+        fixedValueBoolean:
+          description: Value must be exactly this
+          type: boolean
+    fixedvalueCode:
+      type: object
+      properties:
+        fixedValueCode:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/code'
+    fixedvalueBase64Binary:
+      type: object
+      properties:
+        fixedValueBase64Binary:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/base64Binary'
+    fixedvalueCoding:
+      type: object
+      properties:
+        fixedValueCoding:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Coding'
+    fixedvalueCodeableConcept:
+      type: object
+      properties:
+        fixedValueCodeableConcept:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/CodeableConcept'
+    fixedvalueAttachment:
+      type: object
+      properties:
+        fixedValueAttachment:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Attachment'
+    fixedvalueIdentifier:
+      type: object
+      properties:
+        fixedValueIdentifier:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Identifier'
+    fixedvalueQuantity:
+      type: object
+      properties:
+        fixedValueQuantity:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Quantity'
+    fixedvalueRange:
+      type: object
+      properties:
+        fixedValueRange:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Range'
+    fixedvaluePeriod:
+      type: object
+      properties:
+        fixedValuePeriod:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Period'
+    fixedvalueRatio:
+      type: object
+      properties:
+        fixedValueRatio:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Range'
+    fixedvalueHumanName:
+      type: object
+      properties:
+        fixedValueHumanName:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/HumanName'
+    fixedvalueAddress:
+      type: object
+      properties:
+        fixedValueAddress:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Address'
+    fixedvalueContactPoint:
+      type: object
+      properties:
+        fixedValueContactPoint:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/ContactPoint'
+    fixedvalueReference:
+      type: object
+      properties:
+        fixedValueReference:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Reference'
+    fixedvalueCanonical:
+      type: object
+      properties:
+        fixedValueCanonical:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/canonical'
+    fixedvalueId:
+      type: object
+      properties:
+        fixedValueId:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/id'
+    fixedvalueMarkdown:
+      type: object
+      properties:
+        fixedValueMarkdown:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/markdown'
+    fixedvalueOid:
+      type: object
+      properties:
+        fixedValueOid:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/oid'
+    fixedvaluePositiveInt:
+      type: object
+      properties:
+        fixedValuePositiveInt:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/positiveInt'
+    fixedvalueTime:
+      type: object
+      properties:
+        fixedValueTime:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/time'
+    fixedvalueUnsignedInt:
+      type: object
+      properties:
+        fixedValueUnsignedInt:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/unsignedInt'
+    fixedvalueUrl:
+      type: object
+      properties:
+        fixedValueUrl:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/url'
+    fixedvalueUuid:
+      type: object
+      properties:
+        fixedValueUuid:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/uuid'
+    fixedvalueAge:
+      type: object
+      properties:
+        fixedValueAge:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Age'
+    fixedvalueAnnotation:
+      type: object
+      properties:
+        fixedValueAnnotation:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Annotation'
+    fixedvalueCount:
+      type: object
+      properties:
+        fixedValueCount:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Count'
+    fixedvalueDistance:
+      type: object
+      properties:
+        fixedValueDistance:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Distance'
+    fixedvalueDuration:
+      type: object
+      properties:
+        fixedValueDuration:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Duration'
+    fixedvalueMoney:
+      type: object
+      properties:
+        fixedValueMoney:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Money'
+    fixedvalueSampledData:
+      type: object
+      properties:
+        fixedValueSampledData:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/SampledData'
+    fixedvalueSignature:
+      type: object
+      properties:
+        fixedValueSignature:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Signature'
+    fixedvalueTiming:
+      type: object
+      properties:
+        fixedValueTiming:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Timing'
+    fixedvalueContactDetail:
+      type: object
+      properties:
+        fixedValueContactDetail:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/ContactDetail'
+    fixedvalueContributor:
+      type: object
+      properties:
+        fixedValueContributor:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Contributor'
+    fixedvalueDataRequirement:
+      type: object
+      properties:
+        fixedValueDataRequirement:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/DataRequirement'
+    fixedvalueExpression:
+      type: object
+      properties:
+        fixedValueExpression:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Expression'
+    fixedvalueParameterDefinition:
+      type: object
+      properties:
+        fixedValueParameterDefinition:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/ParameterDefinition'
+    fixedvalueRelatedArtifact:
+      type: object
+      properties:
+        fixedValueRelatedArtifact:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/RelatedArtifact'
+    fixedvalueTriggerDefinition:
+      type: object
+      properties:
+        fixedValueTriggerDefinition:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/TriggerDefinition'
+    fixedvalueUsageContext:
+      type: object
+      properties:
+        fixedValueUsageContext:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/UsageContext'
+    fixedvalueDosage:
+      type: object
+      properties:
+        fixedValueDosage:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Dosage'
+    fixedvalueMeta:
+      type: object
+      properties:
+        fixedValueMeta:
+          description: Value must be exactly this
+          $ref: '#/components/schemas/Meta'
+    patternvalueInteger:
+      type: object
+      properties:
+        patternValueInteger:
+          description: Value must have at least these property values
+          type: integer
+    patternvalueDecimal:
+      type: object
+      properties:
+        patternValueDecimal:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/decimal'
+    patternvalueDateTime:
+      type: object
+      properties:
+        patternValueDateTime:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/dateTime'
+    patternvalueDate:
+      type: object
+      properties:
+        patternValueDate:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/date'
+    patternvalueInstant:
+      type: object
+      properties:
+        patternValueInstant:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/instant'
+    patternvalueString:
+      type: object
+      properties:
+        patternValueString:
+          description: Value must have at least these property values
+          type: string
+    patternvalueUri:
+      type: object
+      properties:
+        patternValueUri:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/uri'
+    patternvalueBoolean:
+      type: object
+      properties:
+        patternValueBoolean:
+          description: Value must have at least these property values
+          type: boolean
+    patternvalueCode:
+      type: object
+      properties:
+        patternValueCode:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/code'
+    patternvalueBase64Binary:
+      type: object
+      properties:
+        patternValueBase64Binary:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/base64Binary'
+    patternvalueCoding:
+      type: object
+      properties:
+        patternValueCoding:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Coding'
+    patternvalueCodeableConcept:
+      type: object
+      properties:
+        patternValueCodeableConcept:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/CodeableConcept'
+    patternvalueAttachment:
+      type: object
+      properties:
+        patternValueAttachment:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Attachment'
+    patternvalueIdentifier:
+      type: object
+      properties:
+        patternValueIdentifier:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Identifier'
+    patternvalueQuantity:
+      type: object
+      properties:
+        patternValueQuantity:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Quantity'
+    patternvalueRange:
+      type: object
+      properties:
+        patternValueRange:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Range'
+    patternvaluePeriod:
+      type: object
+      properties:
+        patternValuePeriod:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Period'
+    patternvalueRatio:
+      type: object
+      properties:
+        patternValueRatio:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Range'
+    patternvalueHumanName:
+      type: object
+      properties:
+        patternValueHumanName:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/HumanName'
+    patternvalueAddress:
+      type: object
+      properties:
+        patternValueAddress:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Address'
+    patternvalueContactPoint:
+      type: object
+      properties:
+        patternValueContactPoint:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/ContactPoint'
+    patternvalueReference:
+      type: object
+      properties:
+        patternValueReference:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Reference'
+    patternvalueCanonical:
+      type: object
+      properties:
+        patternValueCanonical:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/canonical'
+    patternvalueId:
+      type: object
+      properties:
+        patternValueId:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/id'
+    patternvalueMarkdown:
+      type: object
+      properties:
+        patternValueMarkdown:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/markdown'
+    patternvalueOid:
+      type: object
+      properties:
+        patternValueOid:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/oid'
+    patternvaluePositiveInt:
+      type: object
+      properties:
+        patternValuePositiveInt:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/positiveInt'
+    patternvalueTime:
+      type: object
+      properties:
+        patternValueTime:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/time'
+    patternvalueUnsignedInt:
+      type: object
+      properties:
+        patternValueUnsignedInt:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/unsignedInt'
+    patternvalueUrl:
+      type: object
+      properties:
+        patternValueUrl:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/url'
+    patternvalueUuid:
+      type: object
+      properties:
+        patternValueUuid:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/uuid'
+    patternvalueAge:
+      type: object
+      properties:
+        patternValueAge:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Age'
+    patternvalueAnnotation:
+      type: object
+      properties:
+        patternValueAnnotation:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Annotation'
+    patternvalueCount:
+      type: object
+      properties:
+        patternValueCount:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Count'
+    patternvalueDistance:
+      type: object
+      properties:
+        patternValueDistance:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Distance'
+    patternvalueDuration:
+      type: object
+      properties:
+        patternValueDuration:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Duration'
+    patternvalueMoney:
+      type: object
+      properties:
+        patternValueMoney:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Money'
+    patternvalueSampledData:
+      type: object
+      properties:
+        patternValueSampledData:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/SampledData'
+    patternvalueSignature:
+      type: object
+      properties:
+        patternValueSignature:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Signature'
+    patternvalueTiming:
+      type: object
+      properties:
+        patternValueTiming:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Timing'
+    patternvalueContactDetail:
+      type: object
+      properties:
+        patternValueContactDetail:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/ContactDetail'
+    patternvalueContributor:
+      type: object
+      properties:
+        patternValueContributor:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Contributor'
+    patternvalueDataRequirement:
+      type: object
+      properties:
+        patternValueDataRequirement:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/DataRequirement'
+    patternvalueExpression:
+      type: object
+      properties:
+        patternValueExpression:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Expression'
+    patternvalueParameterDefinition:
+      type: object
+      properties:
+        patternValueParameterDefinition:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/ParameterDefinition'
+    patternvalueRelatedArtifact:
+      type: object
+      properties:
+        patternValueRelatedArtifact:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/RelatedArtifact'
+    patternvalueTriggerDefinition:
+      type: object
+      properties:
+        patternValueTriggerDefinition:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/TriggerDefinition'
+    patternvalueUsageContext:
+      type: object
+      properties:
+        patternValueUsageContext:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/UsageContext'
+    patternvalueDosage:
+      type: object
+      properties:
+        patternValueDosage:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Dosage'
+    patternvalueMeta:
+      type: object
+      properties:
+        patternValueMeta:
+          description: Value must have at least these property values
+          $ref: '#/components/schemas/Meta'
+    minvalueInteger:
+      type: object
+      properties:
+        minValueInteger:
+          description: Minimum Allowed Value (for some types)
+          type: integer
+    minvalueDecimal:
+      type: object
+      properties:
+        minValueDecimal:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/decimal'
+    minvalueDateTime:
+      type: object
+      properties:
+        minValueDateTime:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/dateTime'
+    minvalueDate:
+      type: object
+      properties:
+        minValueDate:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/date'
+    minvalueInstant:
+      type: object
+      properties:
+        minValueInstant:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/instant'
+    minvalueTime:
+      type: object
+      properties:
+        minValueTime:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/time'
+    minvalueUnsignedInt:
+      type: object
+      properties:
+        minValueUnsignedInt:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/unsignedInt'
+    minvaluePositiveInt:
+      type: object
+      properties:
+        minValuePositiveInt:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/positiveInt'
+    minvalueQuantity:
+      type: object
+      properties:
+        minValueQuantity:
+          description: Minimum Allowed Value (for some types)
+          $ref: '#/components/schemas/Quantity'
+    maxvalueInteger:
+      type: object
+      properties:
+        maxValueInteger:
+          description: Maximum Allowed Value (for some types)
+          type: integer
+    maxvalueDecimal:
+      type: object
+      properties:
+        maxValueDecimal:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/decimal'
+    maxvalueDateTime:
+      type: object
+      properties:
+        maxValueDateTime:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/dateTime'
+    maxvalueDate:
+      type: object
+      properties:
+        maxValueDate:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/date'
+    maxvalueInstant:
+      type: object
+      properties:
+        maxValueInstant:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/instant'
+    maxvalueTime:
+      type: object
+      properties:
+        maxValueTime:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/time'
+    maxvalueUnsignedInt:
+      type: object
+      properties:
+        maxValueUnsignedInt:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/unsignedInt'
+    maxvaluePositiveInt:
+      type: object
+      properties:
+        maxValuePositiveInt:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/positiveInt'
+    maxvalueQuantity:
+      type: object
+      properties:
+        maxValueQuantity:
+          description: Maximum Allowed Value (for some types)
+          $ref: '#/components/schemas/Quantity'
+    ElementDefinition:
+      description: |
+        Definition of an element in a resource or extension
+        + Rule: Min <= Max
+        + Rule: if the element definition has a contentReference, it cannot have type, defaultValue, fixed, pattern, example, minValue, maxValue, maxLength, or binding
+        + Rule: Fixed value may only be specified if there is one type
+        + Rule: Pattern may only be specified if there is one type
+        + Rule: Pattern and fixed are mutually exclusive
+        + Rule: Binding can only be present for coded elements, string, and uri
+        + Rule: Types must be unique by code
+        + Rule: Constraints must be unique by key
+        + Rule: default value and meaningWhenMissing are mutually exclusive
+        + Rule: sliceName must be composed of proper tokens separated by "/"
+        + Rule: Must have a modifier reason if isModifier = true
+        + Rule: Element names cannot include some special characters
+        + Warning: Element names should be simple alphanumerics with a max of 64 characters, or code generation tools may be broken
+        + Rule: sliceIsConstraining can only appear if slicename is present
+      allOf:
+        - $ref: '#/components/schemas/BackboneElement'
+      type: object
+      properties:
+        path:
+          description: Path of the element in the hierarchy of elements
+          type: string
+        representation:
+          description: xmlAttr | xmlText | typeAttr | cdaText | xhtml
+          type: string
+        sliceName:
+          description: Name for this particular element (in a set of slices)
+          type: string
+        sliceIsConstraining:
+          description: If this slice definition constrains an inherited slice definition (or not)
+          type: boolean
+        label:
+          description: Name for element to display with or prompt for element
+          type: string
+        code:
+          description: Corresponding codes in terminologies https://www.hl7.org/fhir/valueset-observation-codes.html
+          type: string
+        slicing:
+          description: |
+            This element is sliced - slices follow
+            + Rule: If there are no discriminators, there must be a definition
+          allOf:
+            - $ref: '#/components/schemas/Element'
+          type: object
+          properties:
+            ordered:
+              description: If elements must be in same order as slices
+              type: boolean
+            rules:
+              description: closed | open | openAtEnd
+              allOf:
+              - $ref: '#/components/schemas/code'
+              - enum:
+                - closed
+                - open
+                - openAtEnd
+            discriminator:
+              description: Element values that are used to distinguish the slices
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Element'
+                type: object
+                properties:
+                  type:
+                    description: value | exists | pattern | type | profile
+                    allOf:
+                      - $ref: '#/components/schemas/code'
+                      - enum:
+                        - value
+                        - exists
+                        - pattern
+                        - type
+                        - profile
+                  path:
+                    description: Path to element value
+                    type: string                
+            description:
+              description: Text description of how slicing works (or not)
+              type: string
+        short:
+          description: Concise definition for space-constrained presentation
+          type: string
+        definition:
+          description: Full formal definition as narrative text
+          $ref: '#/components/schemas/markdown'
+        alias:
+          description: Other names
+          type: string
+        comment:
+          description: Comments about the use of this element
+          $ref: '#/components/schemas/markdown'
+        requirements:
+          description: Why this resource has been created
+          $ref: '#/components/schemas/markdown'
+        max:
+          description: |
+            Maximum Cardinality (a number or *)
+            + Rule: Max SHALL be a number or "*"
+          type: string
+        min:
+          description: Minimum Cardinality
+          $ref: '#/components/schemas/unsignedInt'
+        base:
+          description: Base definition information for tools
+          allOf:
+            - $ref: '#/components/schemas/Element'
+          type: object
+          properties:
+            max:
+              description: Max cardinality of the base element
+              type: string
+            path:
+              description: Path that identifies the base element
+              type: string
+            min:
+              description: Min cardinality of the base element
+              $ref: '#/components/schemas/unsignedInt'              
+        contentReference:
+          description: Reference to definition of content for the element
+          $ref: '#/components/schemas/uri'
+        type:
+          description: |
+            Data type and Profile for this element
+            + Rule: Aggregation may only be specified if one of the allowed types for the element is a reference
+            + Rule: targetProfile is only allowed if the type is Reference or canonical
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              targetProfile:
+                description: Profile (StructureDefinition or IG) on the Reference/canonical target - one must apply
+                type: string
+              aggregation:
+                description: contained | referenced | bundled - how aggregated
+                type: string
+              profile:
+                description: Profiles (StructureDefinition or IG) - one must apply
+                type: string
+              code:
+                description: Data type or Resource (reference to definition)
+                $ref: '#/components/schemas/uri'
+              versioning:
+                description: either | independent | specific
+                allOf:
+                  - $ref: '#/components/schemas/code'
+                  - enum:
+                    - either
+                    - independent
+                    - specific
+        defaultValue:
+          description: Specified value if missing from instance
+          oneOf:
+            - $ref: '#/components/schemas/defaultvalueInteger'
+            - $ref: '#/components/schemas/defaultvalueDecimal'
+            - $ref: '#/components/schemas/defaultvalueDateTime'
+            - $ref: '#/components/schemas/defaultvalueDate'
+            - $ref: '#/components/schemas/defaultvalueInstant'
+            - $ref: '#/components/schemas/defaultvalueString'
+            - $ref: '#/components/schemas/defaultvalueUri'
+            - $ref: '#/components/schemas/defaultvalueBoolean'
+            - $ref: '#/components/schemas/defaultvalueCode'
+            - $ref: '#/components/schemas/defaultvalueBase64Binary'
+            - $ref: '#/components/schemas/defaultvalueCoding'
+            - $ref: '#/components/schemas/defaultvalueCodeableConcept'
+            - $ref: '#/components/schemas/defaultvalueAttachment'
+            - $ref: '#/components/schemas/defaultvalueIdentifier'
+            - $ref: '#/components/schemas/defaultvalueQuantity'
+            - $ref: '#/components/schemas/defaultvalueRange'
+            - $ref: '#/components/schemas/defaultvaluePeriod'
+            - $ref: '#/components/schemas/defaultvalueRatio'
+            - $ref: '#/components/schemas/defaultvalueHumanName'
+            - $ref: '#/components/schemas/defaultvalueAddress'
+            - $ref: '#/components/schemas/defaultvalueContactPoint'
+            - $ref: '#/components/schemas/defaultvalueReference'
+            - $ref: '#/components/schemas/defaultvalueCanonical'
+            - $ref: '#/components/schemas/defaultvalueId'
+            - $ref: '#/components/schemas/defaultvalueMarkdown'
+            - $ref: '#/components/schemas/defaultvalueOid'
+            - $ref: '#/components/schemas/defaultvaluePositiveInt'
+            - $ref: '#/components/schemas/defaultvalueTime'
+            - $ref: '#/components/schemas/defaultvalueUnsignedInt'
+            - $ref: '#/components/schemas/defaultvalueUrl'
+            - $ref: '#/components/schemas/defaultvalueUuid'
+            - $ref: '#/components/schemas/defaultvalueAge'
+            - $ref: '#/components/schemas/defaultvalueAnnotation'
+            - $ref: '#/components/schemas/defaultvalueCount'
+            - $ref: '#/components/schemas/defaultvalueDistance'
+            - $ref: '#/components/schemas/defaultvalueDuration'
+            - $ref: '#/components/schemas/defaultvalueMoney'
+            - $ref: '#/components/schemas/defaultvalueSampledData'
+            - $ref: '#/components/schemas/defaultvalueSignature'
+            - $ref: '#/components/schemas/defaultvalueTiming'
+            - $ref: '#/components/schemas/defaultvalueContactDetail'
+            - $ref: '#/components/schemas/defaultvalueContributor'
+            - $ref: '#/components/schemas/defaultvalueDataRequirement'
+            - $ref: '#/components/schemas/defaultvalueExpression'
+            - $ref: '#/components/schemas/defaultvalueParameterDefinition'
+            - $ref: '#/components/schemas/defaultvalueRelatedArtifact'
+            - $ref: '#/components/schemas/defaultvalueTriggerDefinition'
+            - $ref: '#/components/schemas/defaultvalueUsageContext'
+            - $ref: '#/components/schemas/defaultvalueDosage'
+            - $ref: '#/components/schemas/defaultvalueMeta'
+        meaningWhenMissing:
+          description: Implicit meaning when this element is missing
+          $ref: '#/components/schemas/markdown'
+        orderMeaning:
+          description: What the order of the elements means
+          type: string
+        fixed:
+          description: Value must be exactly this
+          oneOf:
+            - $ref: '#/components/schemas/fixedvalueInteger'
+            - $ref: '#/components/schemas/fixedvalueDecimal'
+            - $ref: '#/components/schemas/fixedvalueDateTime'
+            - $ref: '#/components/schemas/fixedvalueDate'
+            - $ref: '#/components/schemas/fixedvalueInstant'
+            - $ref: '#/components/schemas/fixedvalueString'
+            - $ref: '#/components/schemas/fixedvalueUri'
+            - $ref: '#/components/schemas/fixedvalueBoolean'
+            - $ref: '#/components/schemas/fixedvalueCode'
+            - $ref: '#/components/schemas/fixedvalueBase64Binary'
+            - $ref: '#/components/schemas/fixedvalueCoding'
+            - $ref: '#/components/schemas/fixedvalueCodeableConcept'
+            - $ref: '#/components/schemas/fixedvalueAttachment'
+            - $ref: '#/components/schemas/fixedvalueIdentifier'
+            - $ref: '#/components/schemas/fixedvalueQuantity'
+            - $ref: '#/components/schemas/fixedvalueRange'
+            - $ref: '#/components/schemas/fixedvaluePeriod'
+            - $ref: '#/components/schemas/fixedvalueRatio'
+            - $ref: '#/components/schemas/fixedvalueHumanName'
+            - $ref: '#/components/schemas/fixedvalueAddress'
+            - $ref: '#/components/schemas/fixedvalueContactPoint'
+            - $ref: '#/components/schemas/fixedvalueReference'
+            - $ref: '#/components/schemas/fixedvalueCanonical'
+            - $ref: '#/components/schemas/fixedvalueId'
+            - $ref: '#/components/schemas/fixedvalueMarkdown'
+            - $ref: '#/components/schemas/fixedvalueOid'
+            - $ref: '#/components/schemas/fixedvaluePositiveInt'
+            - $ref: '#/components/schemas/fixedvalueTime'
+            - $ref: '#/components/schemas/fixedvalueUnsignedInt'
+            - $ref: '#/components/schemas/fixedvalueUrl'
+            - $ref: '#/components/schemas/fixedvalueUuid'
+            - $ref: '#/components/schemas/fixedvalueAge'
+            - $ref: '#/components/schemas/fixedvalueAnnotation'
+            - $ref: '#/components/schemas/fixedvalueCount'
+            - $ref: '#/components/schemas/fixedvalueDistance'
+            - $ref: '#/components/schemas/fixedvalueDuration'
+            - $ref: '#/components/schemas/fixedvalueMoney'
+            - $ref: '#/components/schemas/fixedvalueSampledData'
+            - $ref: '#/components/schemas/fixedvalueSignature'
+            - $ref: '#/components/schemas/fixedvalueTiming'
+            - $ref: '#/components/schemas/fixedvalueContactDetail'
+            - $ref: '#/components/schemas/fixedvalueContributor'
+            - $ref: '#/components/schemas/fixedvalueDataRequirement'
+            - $ref: '#/components/schemas/fixedvalueExpression'
+            - $ref: '#/components/schemas/fixedvalueParameterDefinition'
+            - $ref: '#/components/schemas/fixedvalueRelatedArtifact'
+            - $ref: '#/components/schemas/fixedvalueTriggerDefinition'
+            - $ref: '#/components/schemas/fixedvalueUsageContext'
+            - $ref: '#/components/schemas/fixedvalueDosage'
+            - $ref: '#/components/schemas/fixedvalueMeta'
+        pattern:
+          description: Value must have at least these property values
+          oneOf:
+            - $ref: '#/components/schemas/patternvalueInteger'
+            - $ref: '#/components/schemas/patternvalueDecimal'
+            - $ref: '#/components/schemas/patternvalueDateTime'
+            - $ref: '#/components/schemas/patternvalueDate'
+            - $ref: '#/components/schemas/patternvalueInstant'
+            - $ref: '#/components/schemas/patternvalueString'
+            - $ref: '#/components/schemas/patternvalueUri'
+            - $ref: '#/components/schemas/patternvalueBoolean'
+            - $ref: '#/components/schemas/patternvalueCode'
+            - $ref: '#/components/schemas/patternvalueBase64Binary'
+            - $ref: '#/components/schemas/patternvalueCoding'
+            - $ref: '#/components/schemas/patternvalueCodeableConcept'
+            - $ref: '#/components/schemas/patternvalueAttachment'
+            - $ref: '#/components/schemas/patternvalueIdentifier'
+            - $ref: '#/components/schemas/patternvalueQuantity'
+            - $ref: '#/components/schemas/patternvalueRange'
+            - $ref: '#/components/schemas/patternvaluePeriod'
+            - $ref: '#/components/schemas/patternvalueRatio'
+            - $ref: '#/components/schemas/patternvalueHumanName'
+            - $ref: '#/components/schemas/patternvalueAddress'
+            - $ref: '#/components/schemas/patternvalueContactPoint'
+            - $ref: '#/components/schemas/patternvalueReference'
+            - $ref: '#/components/schemas/patternvalueCanonical'
+            - $ref: '#/components/schemas/patternvalueId'
+            - $ref: '#/components/schemas/patternvalueMarkdown'
+            - $ref: '#/components/schemas/patternvalueOid'
+            - $ref: '#/components/schemas/patternvaluePositiveInt'
+            - $ref: '#/components/schemas/patternvalueTime'
+            - $ref: '#/components/schemas/patternvalueUnsignedInt'
+            - $ref: '#/components/schemas/patternvalueUrl'
+            - $ref: '#/components/schemas/patternvalueUuid'
+            - $ref: '#/components/schemas/patternvalueAge'
+            - $ref: '#/components/schemas/patternvalueAnnotation'
+            - $ref: '#/components/schemas/patternvalueCount'
+            - $ref: '#/components/schemas/patternvalueDistance'
+            - $ref: '#/components/schemas/patternvalueDuration'
+            - $ref: '#/components/schemas/patternvalueMoney'
+            - $ref: '#/components/schemas/patternvalueSampledData'
+            - $ref: '#/components/schemas/patternvalueSignature'
+            - $ref: '#/components/schemas/patternvalueTiming'
+            - $ref: '#/components/schemas/patternvalueContactDetail'
+            - $ref: '#/components/schemas/patternvalueContributor'
+            - $ref: '#/components/schemas/patternvalueDataRequirement'
+            - $ref: '#/components/schemas/patternvalueExpression'
+            - $ref: '#/components/schemas/patternvalueParameterDefinition'
+            - $ref: '#/components/schemas/patternvalueRelatedArtifact'
+            - $ref: '#/components/schemas/patternvalueTriggerDefinition'
+            - $ref: '#/components/schemas/patternvalueUsageContext'
+            - $ref: '#/components/schemas/patternvalueDosage'
+            - $ref: '#/components/schemas/patternvalueMeta'
+        example:
+          description: Example value (as defined for type)
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              value:
+                description: Value of Example (one of allowed types)
+                type: string
+              label:
+                description: Describes the purpose of this example
+                type: string            
+        minValue:
+          description: Minimum Allowed Value (for some types)
+          oneOf:
+            - $ref: '#/components/schemas/minvalueInteger'
+            - $ref: '#/components/schemas/minvalueDecimal'
+            - $ref: '#/components/schemas/minvalueDateTime'
+            - $ref: '#/components/schemas/minvalueDate'
+            - $ref: '#/components/schemas/minvalueInstant'
+            - $ref: '#/components/schemas/minvalueTime'
+            - $ref: '#/components/schemas/minvalueUnsignedInt'
+            - $ref: '#/components/schemas/minvaluePositiveInt'
+            - $ref: '#/components/schemas/minvalueQuantity'
+        maxValueDate:
+          description: Maximum Allowed Value (for some types)
+          oneOf:
+            - $ref: '#/components/schemas/maxvalueInteger'
+            - $ref: '#/components/schemas/maxvalueDecimal'
+            - $ref: '#/components/schemas/maxvalueDateTime'
+            - $ref: '#/components/schemas/maxvalueDate'
+            - $ref: '#/components/schemas/maxvalueInstant'
+            - $ref: '#/components/schemas/maxvalueTime'
+            - $ref: '#/components/schemas/maxvalueUnsignedInt'
+            - $ref: '#/components/schemas/maxvaluePositiveInt'
+            - $ref: '#/components/schemas/maxvalueQuantity'
+        maxLength:
+          description: Max length for strings
+          type: integer
+        condition:
+          description: Reference to invariant about presence
+          type: string
+        constraint:
+          description: |
+            Condition that must evaluate to true
+            + Warning: Constraints should have an expression or else validators will not be able to enforce them
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              severity:
+                description: error | warning
+                allOf:
+                  - $ref: '#/components/schemas/code'
+                  - enum:
+                    - error
+                    - warning
+              source:
+                description: Reference to original source of constraint
+                $ref: '#/components/schemas/canonical'
+              xpath:
+                description: XPath expression of constraint
+                type: string
+              requirements:
+                description: Why this constraint is necessary or appropriate
+                type: string
+              expression:
+                description: FHIRPath expression of constraint
+                type: string
+              human:
+                description: Human description of constraint
+                type: string
+              key:
+                description: Target of 'condition' reference above
+                $ref: '#/components/schemas/id'            
+        mustSupport:
+          description: If the element must be supported
+          type: boolean
+        isModifierReason:
+          description: Reason that this element is marked as a modifier
+          type: string
+        isModifier:
+          description: If this modifies the meaning of other elements
+          type: boolean
+        isSummary:
+          description: Include when _summary = true?
+          type: boolean
+        binding:
+          description: |
+            ValueSet details if this is coded
+            + Rule: ValueSet SHALL start with http:// or https:// or urn:
+          allOf:
+            - $ref: '#/components/schemas/Element'
+          type: object
+          properties:
+            valueSet:
+              description: Source of value set
+              type: string
+            description:
+              description: Human explanation of the value set
+              type: string
+            strength:
+              description: required | extensible | preferred | example
+              allOf:
+              - $ref: '#/components/schemas/code'
+              - enum:
+                - required
+                - extensible
+                - preferred
+                - example
+        mapping:
+          description: Map element to another set of definitions
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Element'
+            type: object
+            properties:
+              comment:
+                description: Comments about the mapping or its use
+                type: string
+              language:
+                description: Computable language of mapping, https://www.hl7.org/fhir/valueset-mimetypes.html
+                $ref: '#/components/schemas/code'
+              identity:
+                description: Reference to mapping declaration
+                $ref: '#/components/schemas/id'
+              map:
+                description: Details of the mapping
+                type: string    
+    Resource:
+      description: Base Resource
+      type: object
+      properties:
+        id:
+          description: Logical id of this artifact
+          $ref: '#/components/schemas/id'
+        meta:
+          description: Metadata about the resource
+          $ref: '#/components/schemas/Meta'
+        implicitRules:
+          description: A set of rules under which this content was created
+          $ref: '#/components/schemas/uri'
+        language:
+          description: |
+            Language of the resource content.
+            Supported languages can be found at: https://www.hl7.org/fhir/valueset-languages.html
+          $ref: '#/components/schemas/code'      
+    DomainResource:
+      description: |
+        A resource with narrative, extensions, and contained resources
+        + If the resource is contained in another resource, it SHALL NOT contain nested Resources
+        + If the resource is contained in another resource, it SHALL NOT contain any narrative
+        + If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated
+        + If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource
+      type: object     
+      properties:
+        id:
+          description: Logical id of this artifact
+          $ref: '#/components/schemas/id'
+        meta:
+          description: Metadata about the resource
+          $ref: '#/components/schemas/Meta'
+        implicitRules:
+          description: A set of rules under which this content was created
+          $ref: '#/components/schemas/uri'
+        language:
+          description: |
+            Language of the resource content.
+            Supported languages can be found at: https://www.hl7.org/fhir/valueset-languages.html
+          $ref: '#/components/schemas/code'
+        text:
+          description: Text summary of the resource, for human interpretation
+          $ref: '#/components/schemas/Narrative'
+        contained:
+          description: Contained, inline Resources
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        extension:
+          description: Additional Content defined by implementations
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        modifierExtension:
+          description: Extensions that cannot be ignored
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+    Entry:
+      description: |
+        Entry in the bundle - will have a resource or information
+        + Rule: must be a resource unless there's a request or response
+        + Rule: fullUrl cannot be a version specific reference
+        This repeating element order: For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type
+      type: object      
+      properties:
+        id:
+          description: Internal id
+          $ref: '#/components/schemas/id'
+        extension:
+          description: |
+            Additional Content defined by implementations - from Element: extension (recursive)
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        modifierExtension:
+          description: Modifier Extensions
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        link:
+          description: Links related to this entry
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/BackboneElement'
+            type: object
+            properties:
+              relation:
+                description: See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+                type: string
+              url:
+                description: Reference details for the link
+                $ref: '#/components/schemas/uri'            
+        resource:
+          description: A resource in the bundle
+          $ref: '#/components/schemas/Resource'
+        fullUrl:
+          description: URI for resource (Absolute URL server address or URI for UUID/OID)
+          $ref: '#/components/schemas/uri'
+        search:
+          description: Search related information
+          allOf:
+            - $ref: '#/components/schemas/BackboneElement'
+          type: object
+          properties:
+            mode:
+              description: match | include | outcome - why this is in the result set
+              allOf:
+                - $ref: '#/components/schemas/code'
+                - enum:
+                  - match
+                  - include
+                  - outcome
+            score:
+              description: Search ranking (between 0 and 1)
+              $ref: '#/components/schemas/decimal'          
+        request:
+          description: Additional execution information (transaction/batch/history)
+          allOf:
+            - $ref: '#/components/schemas/BackboneElement'
+          type: object
+          properties:
+            method:
+              description: GET | HEAD | POST | PUT | DELETE | PATCH
+              allOf:
+                - $ref: '#/components/schemas/code'
+                - enum:
+                  - GET
+                  - PUT
+                  - POST
+                  - DELETE
+                  - HEAD
+                  - PATCH
+            url:
+              description: URL for HTTP equivalent of this entry
+              $ref: '#/components/schemas/uri'
+            ifNoneMatch:
+              description: For managing cache currency
+              type: string
+            ifModifiedSince:
+              description: For managing cache currency
+              $ref: '#/components/schemas/instant'
+            ifMatch:
+              description: For managing update contention
+              type: string
+            ifNoneExist:
+              description: For conditional creates
+              type: string          
+        response:
+          description: Results of execution (transaction/batch/history)
+          allOf:
+            - $ref: '#/components/schemas/BackboneElement'
+          type: object  
+          properties:
+            status:
+              description: Status response code (text optional)
+              type: string
+            location:
+              description: The location (if the operation returns a location)
+              $ref: '#/components/schemas/uri'
+            etag:
+              description: The Etag for the resource (if relevant)
+              type: string
+            lastModified:
+              description: Server's date time modified
+              $ref: '#/components/schemas/instant'
+            outcome:
+              description: OperationOutcome with hints and warnings (for batch/transaction)
+              $ref: '#/components/schemas/Resource'              
+    Bundle:
+      description: |
+        Contains a collection of resources
+        + Rule: total only when a search or history
+        + Rule: entry.search only when a search
+        + Rule: entry.request mandatory for batch/transaction/history, otherwise prohibited
+        + Rule: entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited
+        + Rule: FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)
+        + Rule: A document must have an identifier with a system and a value
+        + Rule: A document must have a date
+        + Rule: A document must have a Composition as the first resource
+        + Rule: A message must have a MessageHeader as the first resource
+        Elements defined in Ancestors: id, meta, implicitRules, language
+      allOf:
+        - $ref: '#/components/schemas/Resource'
+      type: object
+      properties:
+        identifier:
+          description: Persistent identifier for the bundle
+          $ref: '#/components/schemas/Identifier'
+        type:
+          description: document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
+          allOf:
+            - $ref: '#/components/schemas/code'
+            - enum:
+              - document
+              - message
+              - transaction
+              - transaction-response
+              - batch
+              - batch-response
+              - history
+              - searchset
+              - collection
+        timestamp:
+          description: When the bundle was assembled
+          $ref: '#/components/schemas/instant'
+        total:
+          description: If search, the total number of matches
+          $ref: '#/components/schemas/unsignedInt'
+        link:
+          description: Links related to this Bundle
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/BackboneElement'
+            type: object
+            properties:
+              relation:
+                description: See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
+                type: string
+              url:
+                description: Reference details for the link
+                $ref: '#/components/schemas/uri'           
+        entry:
+          description: |
+            Entry in the bundle - will have a resource or information
+            + Rule: must be a resource unless there's a request or response
+            + Rule: fullUrl cannot be a version specific reference
+            This repeating element order: For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        signature:
+          description: Digital Signature
+          $ref: '#/components/schemas/Signature'      
+    OperationOutcome:
+      description: Information about the success/failure of an action. Elements defined in Ancestors id, meta, implicitRules, language, text, contained, extension, modifierExtension
+      allOf:
+        - $ref: '#/components/schemas/DomainResource'
+      type: object
+      properties:
+        issue:
+          allOf:
+            - $ref: '#/components/schemas/BackboneElement'
+          type: object
+          properties:
+            severity:
+              description: fatal | error | warning | information
+              allOf:
+                - $ref: '#/components/schemas/code'
+                - enum:
+                  - fatal
+                  - error
+                  - warning
+                  - information
+            code:
+              description: Error or warning code
+              allOf:
+                - $ref: '#/components/schemas/code'
+                - enum:
+                  - invalid
+                  - structure
+                  - required
+                  - value
+                  - invariant
+                  - security
+                  - login
+                  - unknown
+                  - expired
+                  - forbidden
+                  - suppressed
+                  - processing
+                  - not-supported
+                  - duplicate
+                  - multiple-matches
+                  - not-found
+                  - deleted
+                  - too-long
+                  - code-invalid
+                  - extension
+                  - too-costly
+                  - business-rule
+                  - conflict
+                  - transient
+                  - lock-error
+                  - no-store
+                  - exception
+                  - timeout
+                  - incomplete
+                  - throttled
+                  - informational
+            details:
+              description: Additional details about the error
+              $ref: '#/components/schemas/CodeableConcept'
+            diagnostics:
+              description: Additional diagnostic information about the issue
+              type: string
+            location:
+              description: Deprecated Path of element(s) related to issue
+              type: array
+              items:
+                type: string
+            expression:
+              description: FHIRPath of element(s) related to issue
+              type: array
+              items:
+                type: string             

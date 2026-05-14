@@ -1,0 +1,149 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: HealthcareService UK Core
+paths: {}
+components:
+  schemas:
+    HealthcareService:
+      description: UK Core HealthcareService
+      allOf:
+        # 1) Inherit from the base HealthcareService (same folder; adjust path as needed)
+        - $ref: ../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-healthcareservice-library/1.0.2/fhir-r4-healthcareservice-library.yaml#/components/schemas/HealthcareService
+      # 2) Apply UK Core-specific extensions & constraints
+      properties:
+        specialty:
+          description: Specific specialty of the Healthcare Service
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+              - type: object
+            properties:
+              coding:
+                type: array
+                items:
+                  type: object
+                  allOf: 
+                    - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+                  properties:
+                    code:
+                      description: Identity of the terminology system
+                      type: string
+                      enum: ["100","101","107","110","120","130","140","141","142","143","145","146","147","148","149","150","160","170","171","180","190","192","200","300","301","302","303","304","305","310","311","313","314","315","317","320","321","325","326","330","340","350","352","360","361","370","371","400","401","410","420","421","430","450","451","460","500","501","502","504","560","600","601","700","710","711","712","713","715","800","810","820","821","822","823","824","830","831","833","834","900","901","902","903","904","950","960"]
+                    system:
+                      description: Identity of the terminology system
+                      type: string
+                      enum: 
+                        - https://fhir.hl7.org.uk/CodeSystem/UKCore-PracticeSettingCode
+                    display:
+                      description: Identity of the terminology system
+                      type: string
+                      enum: 
+                        - General Surgery
+                        - Urology
+                        - Vascular Surgery
+                        - Trauma and Orthopaedics
+                        - Ear Nose and Throat
+                        - Ophthalmology
+                        - Oral Surgery
+                        - Restorative Dentistry
+                        - Paediatric Dentistry
+                        - Orthodontics
+                        - Oral and Maxillofacial Surgery
+                        - Endodontics
+                        - Periodontics
+                        - Prosthodontics
+                        - Surgical Dentistry
+                        - Neurosurgery
+                        - Plastic Surgery
+                        - Cardiothoracic Surgery
+                        - Paediatric Surgery
+                        - Emergency Medicine
+                        - Anaesthetics
+                        - Intensive Care Medicine
+                        - Aviation and Space Medicine
+                        - General Internal Medicine
+                        - Gastroenterology
+                        - Endocrinology and Diabetes
+                        - Clinical Haematology
+                        - Clinical Physiology
+                        - Clinical Pharmacology
+                        - Audio Vestibular Medicine
+                        - Clinical Genetics
+                        - Clinical Immunology
+                        - Rehabilitation Medicine
+                        - Palliative Medicine
+                        - Allergy
+                        - Cardiology
+                        - Paediatric Cardiology
+                        - Sport and Exercise Medicine
+                        - Acute Internal Medicine
+                        - Dermatology
+                        - Respiratory Medicine
+                        - Infectious Diseases
+                        - Tropical Medicine
+                        - Genitourinary Medicine
+                        - Renal Medicine
+                        - Medical Oncology
+                        - Nuclear Medicine
+                        - Neurology
+                        - Clinical Neurophysiology
+                        - Rheumatology
+                        - Paediatrics
+                        - Paediatric Neurology
+                        - Geriatric Medicine
+                        - Dental Medicine
+                        - Special Care Dentistry
+                        - Medical Ophthalmology
+                        - Obstetrics and Gynaecology
+                        - Obstetrics
+                        - Gynaecology
+                        - Community Sexual and Reproductive Health
+                        - Midwifery
+                        - General Medical Practice
+                        - General Dental Practice
+                        - Learning Disability
+                        - Adult Mental Illness
+                        - Child and Adolescent Psychiatry
+                        - Forensic Psychiatry
+                        - Medical Psychotherapy
+                        - Old Age Psychiatry
+                        - Clinical Oncology
+                        - Radiology
+                        - General Pathology
+                        - Blood Transfusion
+                        - Chemical Pathology
+                        - Haematology
+                        - Histopathology
+                        - Immunopathology
+                        - Medical Microbiology and Virology
+                        - Medical Microbiology
+                        - Medical Virology
+                        - Community Medicine
+                        - Occupational Medicine
+                        - Community Health Services Dental
+                        - Public Health Medicine
+                        - Public Health Dental
+                        - Nursing
+                        - Allied Health Professional
+        communication:
+          description: A language the practitioner is able to use in patient communication
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+            properties:
+              coding:
+                type: array
+                items:
+                  type: object
+                  allOf: 
+                    - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+                  properties:
+                    system:
+                      description: Identity of the terminology system
+                      type: string
+                      enum: [urn:ietf:bcp:47]

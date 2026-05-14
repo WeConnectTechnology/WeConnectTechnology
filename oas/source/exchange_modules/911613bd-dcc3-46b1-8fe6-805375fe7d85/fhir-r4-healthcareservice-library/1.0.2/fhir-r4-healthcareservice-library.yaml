@@ -1,0 +1,172 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: HealthcareService US Core
+
+paths: {}
+components:
+  schemas:
+    HealthcareService:
+      description: |
+        The details of a healthcare service available at a location
+        Elements defined in Ancestors: id, meta, implicitRules, language, text, contained, extension, modifierExtension
+      type: object
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/DomainResource'
+      properties:
+        resourceType:
+          type: string
+          enum: [HealthcareService]
+        identifier:
+          type: array
+          description: External identifiers for this item
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+        active:
+          type: boolean
+          description: Whether this HealthcareService record is in active use
+        providedBy:
+          description: Organization that provides this service
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        category:
+          type: array
+          description: Broad category of service being performed or delivered
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        type:
+          type: array
+          description: Type of service that may be delivered or performed
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        specialty:
+          type: array
+          description: Specialties handled by the HealthcareService
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        location:
+          type: array
+          description: Location(s) where service may be provided
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        name:
+          type: string
+          description: Description of service as presented to a consumer while searching
+        comment:
+          type: string
+          description: Additional description and/or any specific issues not covered
+            elsewhere
+        extraDetails:
+          description: Extra details about the service that can't be placed in the other fields
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/markdown'
+        photo:
+          description: Facilitates quick identification of the service
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Attachment'
+        telecom:
+          type: array
+          description: Contacts related to the healthcare service
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/ContactPoint'
+        coverageArea:
+          type: array
+          description: Location(s) service is intended for/available to
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        serviceProvisionCode:
+          type: array
+          description: Conditions under which service is available/offered
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        eligibility:
+          type: array
+          description: Specific eligibility requirements required to use the service
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            properties:
+              code:
+                description: Coded value for the eligibility
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+              comment:
+                description: Describes the eligibility conditions for the service
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/markdown'
+        program:
+          type: array
+          description: Programs that this service is applicable to
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        characteristic:
+          type: array
+          description: Collection of characteristics (attributes)
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        communication:
+          type: array
+          description: The language that this service is offered in
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        referralMethod:
+          type: array
+          description: Ways that the service accepts referrals
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        appointmentRequired:
+          type: boolean
+          description: If an appointment is required for access to this service
+        availableTime:
+          type: array
+          description: Times the Service Site is available
+          items:
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            properties:
+              availableEndTime:
+                description: Closing time of day (ignored if allDay = true)
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/time'
+              availableStartTime:
+                description: |
+                  Opening time of day (ignored if allDay = true)
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/time'
+              allDay:
+                type: boolean
+                description: Always available? e.g. 24 hour service
+              daysOfWeek:
+                type: array
+                description: Indicates which days of the week are available between the start and end Times.
+                items:
+                  description: mon | tue | wed | thu | fri | sat | sun
+                  type: string
+                  enum:
+                    - mon
+                    - tue
+                    - wed
+                    - thu
+                    - fri
+                    - sat
+                    - sun  
+        notAvailable:
+          type: array
+          description: |
+            Not available during this time due to provided reason            
+          items:
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            type: object
+            properties:
+              description:
+                type: string
+                description: Reason presented to the user explaining why time not available
+              during:
+                description: Service not available from this date
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Period'
+            required:
+              - description
+        availabilityExceptions:
+          type: string
+          description: Description of availability exceptions
+        endpoint:
+          type: array
+          description: Technical endpoints providing access to services operated for
+            the practitioner with this role
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'

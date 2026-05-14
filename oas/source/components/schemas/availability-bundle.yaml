@@ -1,0 +1,181 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: availability-bundle
+paths: {}
+components:
+  schemas:
+    Bundle:
+      type: object
+      allOf:
+         - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Bundle'
+      properties:
+        entry:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+    Entry:
+      type: object
+      properties:
+        fullUrl:
+          type: string
+          description: "URN/URL unique within the Bundle (e.g. urn:uuid:pat-aaaa)"
+        resource:
+          anyOf: 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-slot-ukcore-component/1.0.1/fhir-r4-slot-ukcore-component.yaml#/components/schemas/Slot'      
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Slot]
+                  required: [resourceType] 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-schedule-ukcore-component/1.0.0/fhir-r4-schedule-ukcore-component.yaml#/components/schemas/Schedule'      
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Schedule]
+                  required: [resourceType] 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-location-ukcore-component/1.0.6/fhir-r4-location-ukcore-component.yaml#/components/schemas/Location'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Location]
+                  required: [resourceType]   
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-healthcareservice-ukcore-component/1.0.2/fhir-r4-healthcareservice-ukcore-component.yaml#/components/schemas/HealthcareService'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [HealthcareService]
+                  required: [resourceType]     
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-practitioner-ukcore-component/1.0.6/fhir-r4-practitioner-ukcore-component.yaml#/components/schemas/Practitioner'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Practitioner]
+                  required: [resourceType]               
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-organization-ukcore-component/1.0.3/fhir-r4-organization-ukcore-component.yaml#/components/schemas/Organization'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Organization]
+                  required: [resourceType]
+          discriminator:
+            propertyName: resourceType
+            mapping:
+              Slot: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-slot-ukcore-component/1.0.1/fhir-r4-slot-ukcore-component.yaml#/components/schemas/Slot'
+              Schedule: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-schedule-ukcore-component/1.0.0/fhir-r4-schedule-ukcore-component.yaml#/components/schemas/Schedule'
+              Location: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-location-ukcore-component/1.0.6/fhir-r4-location-ukcore-component.yaml#/components/schemas/Location'
+              HealthcareService: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-healthcareservice-ukcore-component/1.0.2/fhir-r4-healthcareservice-ukcore-component.yaml#/components/schemas/HealthcareService'
+              Practitioner: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-practitioner-ukcore-component/1.0.6/fhir-r4-practitioner-ukcore-component.yaml#/components/schemas/Practitioner'
+              Organization: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-organization-ukcore-component/1.0.3/fhir-r4-organization-ukcore-component.yaml#/components/schemas/Organization'          
+      required:
+        - resource
+  parameters:
+    PractitionerCode:
+      name: schedule.actor:Practitioner.identifier
+      in: query
+      required: false
+      description: Practitioner Id
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    SpecialityCode:
+      name: specialty
+      in: query
+      required: false
+      description: Specialty
+      schema:
+        type: string
+    TreatmentCode:
+      name: service-type
+      in: query
+      required: false
+      description: Service Type
+      schema:
+        type: string
+    LocationId:
+      name: schedule.location.identifier
+      in: query
+      required: false
+      description: Location
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    PractitionerGender:
+      name: schedule.actor:Practitioner.gender
+      in: query
+      required: false
+      description: >
+          Restricts results to slots associated with a practitioner of the specified administrative gender, following the FHIR AdministrativeGender ValueSet.
+      schema:
+        type: string
+        enum: [male, female, unknown] 
+    Dates:
+      name: start
+      in: query
+      description: >
+       Slot start date filter using FHIR prefixes:
+          - `geYYYY-MM-DD` for start date greater than or equal
+          - `leYYYY-MM-DD` for end date less than or equal
+
+          Example:
+          start=ge2026-05-01
+          start=le2026-05-31
+      required: true
+      schema:
+        type: string
+        pattern: '^(ge|le)[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+    AppointmentType:
+      name: appointment-type
+      in: query
+      description: >
+            Restricts the returned appointment slots to a specific care setting (Inpatient, Outpatient, or Daycase). 
+            Values represent standard HL7 v3 ActEncounterCode tokens passed as 'system|code'. IMP (inpatient encounter) = Inpatient, AMB (ambulatory) = Outpatient, SS (short stay) = Daycase.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: string
+        enum:
+          - "hl7.org|IMP"
+          - "hl7.org|AMB"
+          - "hl7.org|SS"
+        example: "hl7.org|AMB"
+    CYPEnabled:
+      name: CYPEnabled
+      in: query
+      description: >
+        Custom FHIR SearchParameter flag. Set to 'true' to restrict results to slots 
+            actively configured or validated to accept Children and Young People.
+      required: false
+      schema:
+        type: boolean
+        example: true
+    Insurer:
+      name: insurer
+      in: query
+      description: >
+        Custom FHIR SearchParameter token to filter slots by accepted insurance network. 
+            Format follows the standard token structure 'system|code' or the raw identifier.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: string

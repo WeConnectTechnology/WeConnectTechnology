@@ -1,0 +1,15 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FHIR-R4-OperationOutcome Component
+paths: {}
+components:
+  schemas:
+    OperationOutcome: 
+      $ref: 'components/schemas/OperationOutcome.yaml#/components/schemas/OperationOutcome'
+    
+    OperationOutcomeEntry: 
+      $ref: 'components/schemas/OperationOutcomeEntry.yaml#/components/schemas/OperationOutcomeEntry'
+    
+    OperationOutcomeBundle: 
+       $ref: 'components/schemas/OperationOutcomeBundle.yaml#/components/schemas/OperationOutcomeBundle'

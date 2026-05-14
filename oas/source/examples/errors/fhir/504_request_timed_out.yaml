@@ -1,0 +1,8 @@
+value:
+  resourceType: OperationOutcome
+  id: "6003"
+  issue:
+    - severity: error
+      code: timeout
+      details:
+        text: "Request to external system timed out."

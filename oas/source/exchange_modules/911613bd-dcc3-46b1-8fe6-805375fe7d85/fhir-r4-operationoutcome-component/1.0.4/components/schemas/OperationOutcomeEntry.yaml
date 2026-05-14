@@ -1,0 +1,19 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OperationOutcomeEntry
+paths: {}
+components:
+  schemas:
+    OperationOutcomeEntry:
+      description: |
+        Entry in the bundle - will have a resource or information
+        + Rule: must be a resource unless there's a request or response
+        + Rule: fullUrl cannot be a version specific reference
+        This repeating element order: For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type
+      type: object
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Entry'
+      properties:
+        resource:
+          $ref: './OperationOutcome.yaml#/components/schemas/OperationOutcome'

@@ -1,0 +1,298 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: ipaas-availability-fhir-eapi-spec
+servers:
+- url: https://availability-fhir.5dwjf9.spirehealthcare.com/v1
+  description: Production
+- url: https://pre-prod-availability-fhir.zhhb6n.spirehealthcare.com/v1
+  description: Pre-Production
+- url: https://qa-availability-fhir.zhhb6n.spirehealthcare.com/v1
+  description: qa
+- url: https://dev-availability-fhir.zhhb6n.spirehealthcare.com/v1
+  description: dev
+tags:
+  - name: Availability
+paths:
+  /health-check:
+    get:
+      operationId: getApiHeartbeat
+      summary: API Heartbeat
+      description: API Heartbeat
+      responses:
+        '200':
+          description: .
+          headers:
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/json:
+              schema: 
+                $ref: '/components/schemas/api-response.yaml#/components/schemas/app-status-response'
+              examples:
+                success:
+                  $ref: '/examples/success/api_status_response.yaml'
+        '400': { $ref: '/components/schemas/error-response.yaml#/components/responses/BadRequest' }
+        '401': { $ref: '/components/schemas/error-response.yaml#/components/responses/Unauthorized' }
+        '403': { $ref: '/components/schemas/error-response.yaml#/components/responses/Forbidden' }
+        '500': { $ref: '/components/schemas/error-response.yaml#/components/responses/InternalServerError' }
+        '503': { $ref: '/components/schemas/error-response.yaml#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '/components/schemas/error-response.yaml#/components/responses/GatewayTimeout' }
+  /Slot:
+    get:
+      operationId: getSlots
+      summary: Get Slots
+      description: Get Available appointment Slots for Consultants and GPs
+      parameters:
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/PractitionerCode'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/SpecialityCode'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/TreatmentCode'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/LocationId'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/PractitionerGender'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/Dates'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/AppointmentType'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/CYPEnabled'
+        - $ref: '/components/schemas/availability-bundle.yaml#/components/parameters/Insurer'
+      responses:
+        '200':
+          description: .
+          headers:
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Bundle'
+        '400':
+          description: Bad request (missing headers, structural issues).
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/json:
+              examples:
+                badRequest:
+                  $ref: '/examples/errors/fhir/400_invalid_input_parameter_badrequest.yaml'
+                invalidDateRange:
+                  $ref: '/examples/errors/fhir/400_invalid_date_range.yaml'
+        '401':
+          description: Unauthenticated (OAuth2 / mTLS failure).
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'      
+          content:
+            application/fhir+json:
+              schema: { $ref: '#/components/schemas/OperationOutcome' }
+              examples:
+                authError:
+                  $ref: '/examples/errors/fhir/401_authentication_error.yaml'
+        '403':
+          description: Forbidden (insufficient scopes or policy).
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/fhir+json:
+              schema: { $ref: '#/components/schemas/OperationOutcome' }
+              examples:
+                forbiddenError:
+                  $ref: '/examples/errors/fhir/403_forbidden_error.yaml'
+        '503':
+          description: Connectivity error.
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/fhir+json:
+              schema: { $ref: '#/components/schemas/OperationOutcome' }
+              examples:
+                connectivityError:
+                  $ref: '/examples/errors/fhir/503_connectivity_error.yaml'
+        '504':
+          description: Timeout error.
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/fhir+json:
+              schema: { $ref: '#/components/schemas/OperationOutcome' }
+              examples:
+                timeOutError:
+                  $ref: '/examples/errors/fhir/504_request_timed_out.yaml'
+        '500':
+          description: Server error.
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/X-Correlation-Id'
+            Content-Security-Policy:
+              $ref: '#/components/headers/Content-Security-Policy'
+            X-Content-Type-Options:
+              $ref: '#/components/headers/X-Content-Type-Options'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Referrer-Policy:
+              $ref: '#/components/headers/Referrer-Policy'
+          content:
+            application/fhir+json:
+              schema: { $ref: '#/components/schemas/OperationOutcome' }
+              examples:
+                internalServerError:
+                  $ref: '/examples/errors/fhir/500_internal_server_error.yaml'
+components:
+  headers:
+    X-Correlation-Id:
+      description: Used for request correlation and distributed tracing across APIs.
+      schema:
+        type: string
+      example: a6107d66-9e2e-49d0-89b4-3d472932eff3
+    Content-Security-Policy:
+      description: Prevents the page from being framed and restricts content sources
+      schema:
+        type: string
+      example: "frame-ancestors 'none'; default-src 'self'"
+    X-Content-Type-Options:
+      description: Prevents MIME type sniffing
+      schema:
+        type: string
+      example: "nosniff"
+    Cache-Control:
+      description: Prevents caching of responses
+      schema:
+        type: string
+      example: "no-store"
+    Referrer-Policy:
+      description: Controls how much referrer information is sent
+      schema:
+        type: string
+      example: "strict-origin-when-cross-origin"
+  schemas: 
+    OperationOutcome:
+      $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-operationoutcome-component/1.0.4/fhir-r4-operationoutcome-component.yaml#/components/schemas/OperationOutcome'
+    Bundle:
+      type: object
+      allOf:
+         - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Bundle'
+      properties:
+        entry:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+    Entry:
+      type: object
+      properties:
+        fullUrl:
+          type: string
+          description: "URN/URL unique within the Bundle (e.g. urn:uuid:pat-aaaa)"
+        resource:
+          anyOf: 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-slot-ukcore-component/1.0.1/fhir-r4-slot-ukcore-component.yaml#/components/schemas/Slot'      
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Slot]
+                  required: [resourceType] 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-schedule-ukcore-component/1.0.0/fhir-r4-schedule-ukcore-component.yaml#/components/schemas/Schedule'      
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Schedule]
+                  required: [resourceType] 
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-location-ukcore-component/1.0.6/fhir-r4-location-ukcore-component.yaml#/components/schemas/Location'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Location]
+                  required: [resourceType]   
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-healthcareservice-ukcore-component/1.0.2/fhir-r4-healthcareservice-ukcore-component.yaml#/components/schemas/HealthcareService'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [HealthcareService]
+                  required: [resourceType]     
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-practitioner-ukcore-component/1.0.6/fhir-r4-practitioner-ukcore-component.yaml#/components/schemas/Practitioner'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Practitioner]
+                  required: [resourceType]               
+            - allOf:
+                - $ref: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-organization-ukcore-component/1.0.3/fhir-r4-organization-ukcore-component.yaml#/components/schemas/Organization'
+                - type: object
+                  properties:
+                    resourceType:
+                      type: string
+                      enum: [Organization]
+                  required: [resourceType]
+          discriminator:
+            propertyName: resourceType
+            mapping:
+              Slot: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-slot-ukcore-component/1.0.1/fhir-r4-slot-ukcore-component.yaml#/components/schemas/Slot'
+              Schedule: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-schedule-ukcore-component/1.0.0/fhir-r4-schedule-ukcore-component.yaml#/components/schemas/Schedule'
+              Location: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-location-ukcore-component/1.0.6/fhir-r4-location-ukcore-component.yaml#/components/schemas/Location'
+              HealthcareService: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-healthcareservice-ukcore-component/1.0.2/fhir-r4-healthcareservice-ukcore-component.yaml#/components/schemas/HealthcareService'
+              Practitioner: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-practitioner-ukcore-component/1.0.6/fhir-r4-practitioner-ukcore-component.yaml#/components/schemas/Practitioner'
+              Organization: '../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-organization-ukcore-component/1.0.3/fhir-r4-organization-ukcore-component.yaml#/components/schemas/Organization'          
+      required:
+        - resource

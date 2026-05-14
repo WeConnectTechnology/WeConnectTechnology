@@ -1,0 +1,14 @@
+value:
+  header:
+    transactionId: abc12345-def6-7890-ab12-cd345678ef90
+    messageId: 1234abcd-5678-90ef-ab12-34567890cdef
+    creationDateTimeStamp: "2025-09-20T16:05:00Z"
+    uniqueIdentifier: REQ_SERVICE_UNAVAILABLE
+  eventDetail:
+    - errorItemType: ERROR
+      errorCode: "1816"
+      errorMessage: HTTP:SERVICE_UNAVAILABLE
+      errorDetail: >
+        HTTP error (Service unavailable): Billing system-api is currently
+        unavailable. | httpStatus=503; serviceName=billing-system-api;
+        path=/system/billing; correlationId=xyz-123-789

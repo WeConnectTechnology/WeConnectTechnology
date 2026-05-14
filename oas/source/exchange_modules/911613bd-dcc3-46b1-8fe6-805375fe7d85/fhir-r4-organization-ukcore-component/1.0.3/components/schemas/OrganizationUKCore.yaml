@@ -1,0 +1,165 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Organization
+paths: {}
+components: 
+  schemas:   
+    Identifier-OdsOrganisationCode:
+      type: object
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'                        
+      properties:                      
+        use:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/code'
+          enum:
+            - usual
+            - official
+            - temp
+            - secondary
+            - old
+        type:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'                       
+        system:
+          type: string
+          enum:
+            - https://fhir.nhs.uk/Id/ods-organization-code
+        value:
+          type: string
+        period:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Period'
+        assigner:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+      required:
+        - system
+        - value
+        
+    Identifier-OdsSiteCode:
+      type: object
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'                        
+      properties:                      
+        use:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/code'
+          enum:
+            - usual
+            - official
+            - temp
+            - secondary
+            - old
+        type:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'                       
+        system:
+          type: string
+          enum:
+            - https://fhir.nhs.uk/Id/ods-site-code
+        value:
+          type: string
+        period:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Period'
+        assigner:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+      required:
+        - system
+        - value
+    
+    Extension-UKCore-MainLocation:
+      description: "UKCore extension *MainLocation* (v2.0.2). Canonical: https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-MainLocation"
+      type: object
+      allOf:
+        - $ref: "../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension"
+      properties:
+        url:
+          description: >
+            A Uniform Resource Locator (RFC 1738 ). Note URLs are accessed
+            directly using the specified protocol. Common URL protocols are
+            http{s}:, ftp:, mailto: and mllp:, though many others are defined.
+          enum:
+            - https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-MainLocation
+          type: string
+        valueReference:
+          $ref: "../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference"
+      required:
+        - url
+        - valueReference
+    
+    Extension-UKCore-Organization-Period:
+      type: object
+      allOf:
+        - $ref: "../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension"
+      properties:
+        url:
+          description: >
+            A Uniform Resource Locator (RFC 1738 ). Note URLs are accessed
+            directly using the specified protocol. Common URL protocols are
+            http{s}:, ftp:, mailto: and mllp:, though many others are defined.
+          enum:
+            - http://hl7.org/fhir/StructureDefinition/organization-period
+          type: string
+        valuePeriod:
+          $ref: "../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference"
+      required:
+        - url
+        - valuePeriod
+    
+    ValueSetUKCoreOrganizationType:
+      description: A set of codes that define the physical type of location where an encounter takes place.
+      type: object
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+      properties:
+        system:
+          type: string
+          enum:             
+            - http://terminology.hl7.org/CodeSystem/organization-type
+            - https://fhir.hl7.org.uk/CodeSystem/UKCore-OrganizationTypeGenomics
+        code:
+          type: string
+          enum: ["other","reli","bus","ins","edu","prov","govt","pay","team","crs","dept","cg","GLH","GEL","LAB"]
+                  
+    Organization:
+      type: object
+      description: "UKCore Organization profile (FHIR R4, v2.0.2). Tags: UKCore. Canonical: https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+      x-ukcore-version: "2.0.2"
+      x-tags: ["UKCore"]
+      x-canonical: "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+      allOf:
+        # 1) Inherit from the base Organization (same folder; adjust path as needed)
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-organization-component/1.0.2/fhir-r4-organization-component.yaml#/components/schemas/Organization'
+      # 2) Apply UK Core-specific extensions & constraints
+      properties:
+        extension:
+          description: Additional Content defined by implementations
+          type: array
+          items:
+            description: >
+              Optional Extensions Element + Rule Must have either extensions or
+              value[x], not both Elements defined in Ancestors id, extension
+            anyOf:
+              - $ref: "#/components/schemas/Extension-UKCore-MainLocation"
+              - $ref: "#/components/schemas/Extension-UKCore-Organization-Period"        
+        identifier:
+          description: Identifies this organization across multiple systems
+          type: array
+          items:
+            type: object
+            anyOf:
+              - $ref: "#/components/schemas/Identifier-OdsOrganisationCode"
+              - $ref: "#/components/schemas/Identifier-OdsSiteCode"
+        type:
+          description: Specific type of service
+          allOf:
+            - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+          type: object
+          properties:
+            coding:
+              type: array
+              items:                  
+                anyOf:
+                  - $ref: '#/components/schemas/ValueSetUKCoreOrganizationType'
+                  - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+            
+                  
+    
+        
+    

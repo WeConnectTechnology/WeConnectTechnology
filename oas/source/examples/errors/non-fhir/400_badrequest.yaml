@@ -1,0 +1,14 @@
+value:
+  header:
+    transactionId: f2a3b1c4-d567-890e-f123-4567890abcde
+    messageId: 123e4567-e89b-12d3-a456-426614174000
+    creationDateTimeStamp: "2025-09-20T14:10:00Z"
+    uniqueIdentifier: ENQUIRY_20001
+  eventDetail:
+    - errorItemType: VALIDATION
+      errorCode: "1400"
+      errorMessage: APIKIT:BAD_REQUEST
+      errorDetail: >
+        APIKit error (Bad request): Invalid request.
+        Additional details - 'email format is invalid' | httpStatus=400;
+        schemaPointer=#/components/schemas/EnquiryRequest/properties/email

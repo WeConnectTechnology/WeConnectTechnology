@@ -1,0 +1,15 @@
+value:
+  header:
+    transactionId: 9f8e7d6c-5b4a-3210-9abc-def123456789
+    messageId: 55554444-3333-2222-1111-0000aaaabbbb
+    creationDateTimeStamp: "2025-09-20T14:40:00Z"
+    uniqueIdentifier: PATIENT_RECORD_9876
+  eventDetail:
+    - errorItemType: ERROR
+      errorCode: "1403"
+      errorMessage: HTTP:FORBIDDEN
+      errorDetail: >
+        HTTP security error: Access to resource is forbidden.
+        Additional details - 'User lacks required role: CLINICIAN_ADMIN'
+        | httpStatus=403; serviceName=patients-experience-api;
+        path=/patients/9876/record

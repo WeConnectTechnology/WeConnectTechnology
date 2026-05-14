@@ -1,0 +1,8 @@
+value:
+  resourceType: OperationOutcome
+  id: "6005"
+  issue:
+    - severity: error
+      code: forbidden
+      details:
+        text: "Insufficient permissions to access this resource."

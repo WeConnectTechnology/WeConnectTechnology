@@ -1,0 +1,88 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Practioner Base
+components: 
+  schemas:
+    Practitioner:
+      description: |
+        Practitioner covers all individuals who are engaged in the healthcare process and healthcare-related services as part of their formal responsibilities and this Resource is used for attribution of activities and responsibilities to these individuals.
+      type: object
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/DomainResource'
+      properties:
+        resourceType:
+          type: string
+          enum: [Practitioner]
+        name:
+            description: The name(s) associated with the practitioner
+            type: array
+            items:
+              $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/HumanName'
+        identifier:
+          description: A identifier for the person as this agent
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+        address:
+          description: Address(es) of the practitioner that are not role specific (typically home address)
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Address'
+        photo:
+          description: Image of the person
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Attachment'
+        birthDate:
+          description: The date  on which the practitioner was born
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/date'
+        communication:
+          description: A language the practitioner is able to use in patient communication
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        qualification:
+          description: |
+            Certification, licenses, or training pertaining to the provision of care
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            properties:
+              code:
+                description: Coded representation of the qualification
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+              identifier:
+                description: An identifier for this qualification for the practitioner
+                type: array
+                items:
+                  $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+              issuer:
+                description: Organization that regulates and issues the qualification
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'           
+              period:
+                description: |
+                  Period during which the qualification is valid
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Period'
+            required:
+              - code
+        active:
+          description: Whether this practitioner's record is in active use
+          type: boolean
+        telecom:
+          description: A contact detail for the practitioner (that apply to all roles)
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/ContactPoint'
+        gender:
+          description: Practitioner gender
+          pattern: ^[^\s]+([\s]+[^\s]+)*$
+          enum:
+            - male
+            - female
+            - other
+            - unknown
+          type: string
+paths: {}

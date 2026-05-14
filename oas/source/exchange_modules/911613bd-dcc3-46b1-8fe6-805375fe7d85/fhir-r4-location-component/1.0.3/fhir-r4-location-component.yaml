@@ -1,0 +1,152 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FHIR-R4-Location Library
+paths: {}
+components:
+  schemas:
+    Location:
+      description: |-
+        Details and position information for a physical place
+        Elements defined in Ancestors: id, meta, implicitRules, language, text, contained, extension, modifierExtension
+      allOf:  
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/DomainResource'
+      properties:
+        operationStatus:
+          description: The operational status of the location (typically only for a bed/room)
+          allOf:
+            - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Coding'
+        mode:
+          description: instance | kind
+          enum:
+            - instance
+            - kind
+          type: string
+          pattern: ^[^\s]+([\s]+[^\s]+)*$
+        name:
+          description: Name of the location as used by humans
+          type: string
+        identifier:
+          description: Unique code or number identifying the location to its users
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+        address:
+          description: Physical location
+          allOf:
+            - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Address'
+        availabilityExceptions:
+          description: Description of availability exceptions
+          type: string
+        managingOrganization:
+          description: Organization responsible for provisioning and upkeep
+          allOf:
+            - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        endpoint:
+          description: Technical endpoints providing access to services operated for the location
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        position:
+          description: The absolute geographic location
+          type: object
+          required:
+            - longitude
+            - latitude
+          properties:
+            altitude:
+              description: Altitude with WGS84 datum
+              type: number
+            longitude:
+              description: Longitude with WGS84 datum
+              type: number
+            modifierExtension:
+              description: Modifier Extensions
+              type: array
+              items:
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension'
+            extension:
+              description: 'Additional Content defined by implementations - from Element: extension (recursive)'
+              type: array
+              items:
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension'
+            id:
+              description: Internal id
+              type: string
+              pattern: '^[A-Za-z0-9\-\.]{1,64}$'
+            latitude:
+              description: Latitude with WGS84 datum
+              type: number
+        hoursOfOperation:
+          description: What days/times during a week is this location usually open
+          type: array
+          items:
+            type: object
+            properties:
+              modifierExtension:
+                description: Modifier Extensions
+                type: array
+                items:
+                  $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension'
+              extension:
+                description: 'Additional Content defined by implementations - from Element: extension (recursive)'
+                type: array
+                items:
+                  $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Extension'
+              id:
+                description: Internal id
+                type: string
+                pattern: '^[A-Za-z0-9\-\.]{1,64}$'
+              closingTime:
+                description: Time that the Location closes
+                type: string
+                pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?$'
+              allDay:
+                description: The Location is open all day
+                type: boolean
+              openingTime:
+                description: Time that the Location opens
+                type: string
+                pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?$'
+              daysOfWeek:
+                description: mon | tue | wed | thu | fri | sat | sun
+                type: array
+                items:
+                  $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/code'
+        telecom:
+          description: Contact details of the location
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/ContactPoint'
+        physicalType:
+          description: Physical form of the location
+          allOf:
+            - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        type:
+          description: Type of function performed
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        description:
+          description: Additional details about the location that could be displayed as further information to identify the location beyond its name
+          type: string
+        status:
+          description: active | suspended | inactive
+          enum:
+            - active
+            - suspended
+            - inactive
+          type: string
+          pattern: ^[^\s]+([\s]+[^\s]+)*$
+        partOf:
+          description: Another Location this one is physically a part of
+          allOf:
+            - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        alias:
+          description: A list of alternate names that the location is known as, or was known as, in the past
+          type: array
+          items:
+            type: string
+  
+
+  

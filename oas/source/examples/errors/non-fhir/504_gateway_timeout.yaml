@@ -1,0 +1,14 @@
+value:
+  header:
+    transactionId: 7890abcd-1234-ef56-7890-abcdef123456
+    messageId: ef901234-5678-abcd-9012-345678abcdef
+    creationDateTimeStamp: "2025-09-20T16:20:00Z"
+    uniqueIdentifier: REQ_GATEWAY_TIMEOUT
+  eventDetail:
+    - errorItemType: ERROR
+      errorCode: "504"
+      errorMessage: HTTP:GATEWAY_TIMEOUT
+      errorDetail: >
+        HTTP error (Gateway timeout): Claims system-api did not respond
+        within the allowed time. | httpStatus=504; serviceName=claims-system-api;
+        path=/system/claims; correlationId=timeout-5678

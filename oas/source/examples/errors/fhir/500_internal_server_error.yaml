@@ -1,0 +1,8 @@
+value:
+  resourceType: OperationOutcome
+  id: "6002"
+  issue:
+    - severity: error
+      code: exception
+      details:
+        text: "An unexpected internal server error occurred"

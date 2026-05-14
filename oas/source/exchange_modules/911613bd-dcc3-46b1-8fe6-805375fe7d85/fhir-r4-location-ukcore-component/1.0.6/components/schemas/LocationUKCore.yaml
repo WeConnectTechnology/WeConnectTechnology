@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: UKCore-Location (FHIR R4) — OpenAPI 3.0.0
+  version: "1.0.0"
+  description: |
+    This OpenAPI document provides JSON schemas for the **UKCore-Location** profile
+    (UK Core STU2 v2.0.2) and its UK-specific extensions. It is designed for validation
+    and contract-sharing purposes in APIs that exchange FHIR R4 JSON.
+
+    Notes & modeling choices
+    - FHIR slicing rules (e.g., requiring an ODS Site Code identifier slice) cannot be
+      expressed exactly in OpenAPI 3.0 (Draft-04 JSON Schema). We therefore:
+        * model `Location.identifier` as an array whose items may be either a general
+          Identifier or the ODS slice (`UKCore_ODSIdentifier`), and
+        * include the vendor extension `x-ukcore-rule` describing the MUST requirement
+          (i.e., at least one ODS identifier SHALL be present).
+    - MustSupport flags are annotated via `x-must-support: true` for implementers.
+    - ValueSet bindings are expressed via enums when practical, and otherwise documented
+      in descriptions.
+
+paths: {}
+components:
+  schemas:  
+    # -------------------------------------------------------------------------
+    # ODS Identifier slice and helper schema
+    # -------------------------------------------------------------------------
+    UKCore_ODSIdentifier:
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+        - type: object
+          description: |
+            Identifier constrained to the UK ODS Site Code slice.
+          properties:
+            system:
+              type: string
+              enum: ["https://fhir.nhs.uk/Id/ods-site-code"]
+            value:
+              type: string
+          required: [system, value]
+
+    # -------------------------------------------------------------------------
+    # UKCore-Location resource schema
+    # -------------------------------------------------------------------------
+    Location:
+      type: object
+      description: |
+        FHIR **Location** profiled by UK Core (STU2 v2.0.2).
+
+        Key UK constraints:
+          - `identifier` SHOULD include exactly one ODS site code (`UKCore_ODSIdentifier`).
+          - `status`, `name`, and `address` are MustSupport.
+          - `managingOrganization` SHOULD reference a UKCore-Organization.
+          - `partOf` SHOULD reference a UKCore-Location.
+
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-location-component/1.0.3/fhir-r4-location-component.yaml#/components/schemas/Location'
+      properties:
+        meta:
+          type: object
+          description: Minimal Meta (not constrained here).
+        identifier:
+          type: array
+          description: |
+            Identifiers for this location. MUST include an ODS Site Code identifier.
+          items:
+            $ref: '#/components/schemas/UKCore_ODSIdentifier'
+          x-ukcore-rule: "At least one item SHALL be an ODS site code (system=https://fhir.nhs.uk/Id/ods-site-code)."
+          x-must-support: true
+        status: 
+          type: string
+          enum: [active, suspended, inactive]
+          description: The status of the location.
+          x-must-support: true
+        name:
+          type: string
+          description: Human-friendly name of the location.
+          x-must-support: true  
+        address:
+          $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Address'
+          x-must-support: true        
+      
+
+    

@@ -1,0 +1,14 @@
+value:
+  header:
+    transactionId: 55667788-99aa-bbcc-ddee-ff0011223344
+    messageId: eeee2222-3333-4444-5555-666677778888
+    creationDateTimeStamp: "2025-09-20T15:45:00Z"
+    uniqueIdentifier: REQ_INTERNAL_ERROR
+  eventDetail:
+    - errorItemType: ERROR
+      errorCode: "1804"
+      errorMessage: HTTP:INTERNAL_SERVER_ERROR
+      errorDetail: >
+        HTTP error (Internal server error): The target system returned an unexpected error.
+        | httpStatus=500; serviceName=appointments-experience-api;
+        path=/appointments; correlationId=abcd-efgh-1234

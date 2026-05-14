@@ -1,0 +1,8 @@
+value:
+  resourceType: OperationOutcome
+  id: "6010"
+  issue:
+    - severity: error
+      code: login
+      details:
+        text: "Invalid credentials."

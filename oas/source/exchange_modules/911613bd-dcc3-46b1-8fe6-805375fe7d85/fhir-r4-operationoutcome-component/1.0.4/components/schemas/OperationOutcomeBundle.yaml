@@ -1,0 +1,32 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OperationOutcomeBundle
+paths: {}
+components: 
+  schemas:
+    OperationOutcomeBundle:
+      description: |
+        Contains a collection of OperationOutcome resources
+        + Rule: total only when a search or history
+        + Rule: entry.search only when a search
+        + Rule: entry.request mandatory for batch/transaction/history, otherwise prohibited
+        + Rule: entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited
+        + Rule: FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)
+        + Rule: A document must have an identifier with a system and a value
+        + Rule: A document must have a date
+        + Rule: A document must have a Composition as the first resource
+        + Rule: A message must have a MessageHeader as the first resource
+        Elements defined in Ancestors: id, meta, implicitRules, language
+      type: object
+      allOf:
+        - $ref: '../../../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Bundle'
+      properties:
+        entry:
+          type: array
+          description: Entry in the bundle - will have a resource or information
+          items:
+            $ref: './OperationOutcomeEntry.yaml#/components/schemas/OperationOutcomeEntry'
+        resourceType:
+          type: string
+          enum: [Bundle]

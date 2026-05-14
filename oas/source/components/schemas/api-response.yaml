@@ -1,0 +1,95 @@
+openapi: "3.0.0"
+
+info:
+  version: 1.0.0
+  title: error-response
+
+components:
+  schemas:
+    app-status-response:
+      description: API health Check response
+      type: object
+      properties:
+        name: 
+          description:  Name of the API
+          type: string
+        status:
+          description:  API status
+          type: string
+        timestamp:
+          description:  Timestamp
+          type: string
+        hostname:
+          description:  API Hostname
+          type: string
+        businessGroupId:
+          description:  The ID uniquely identifies each business group in MuleSoft
+          type: string
+        environmentId:
+          description: the Environment ID is the unique identifier for an environment (e.g., Sandbox, Design, Production)
+          type: string
+        ip:
+          description: IP address
+          type: string
+        node:
+          description: Node number
+          type: string
+        muleVersion:
+          description: Mule Version
+          type: string
+        javaVersion:
+          description: Java Version
+          type: string
+        cpu:
+          description: Number of CPU allocated
+          type: string
+        memory:
+          description: Memory Allocated.
+          type: string
+    
+    ErrorResponse:
+      description: The Data format for API Fault Responses
+      type: object
+      properties:
+        header:
+          type: object
+          required:
+            - transactionId
+            - messageId
+            - creationDateTimeStamp
+            - uniqueIdentifier
+          properties:
+            transactionId:
+              type: string
+              description: Unique flow transaction identifier (UUID)
+            messageId:
+              type: string
+              description: Unique message identifier (UUID)
+            creationDateTimeStamp:
+              type: string
+              format: date-time
+            uniqueIdentifier:
+              type: string
+        eventDetail:
+          type: array
+          items:
+            type: object
+            required:
+              - errorItemType
+              - errorCode
+              - errorMessage
+              - errorDetail
+            properties:
+              errorItemType:
+                type: string
+                enum: [ERROR, VALIDATION]
+              errorCode:
+                type: string
+              errorMessage:
+                type: string
+              errorDetail:
+                type: string
+
+      required:
+        - header
+        - eventDetail

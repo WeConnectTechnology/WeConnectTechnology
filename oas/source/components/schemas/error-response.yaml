@@ -1,0 +1,193 @@
+openapi: "3.0.0"
+
+info:
+  version: 1.0.0
+  title: error-response
+
+components:
+  responses:
+    BadRequest:
+      description: Bad request (missing headers, structural issues).
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema:  
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            badRequest: 
+              $ref: '../../examples/errors/non-fhir/400_badrequest.yaml'
+
+    Unauthorized:
+      description: Unauthenticated (OAuth2 / mTLS failure).
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema: 
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            authError:
+              $ref: '../../examples/errors/non-fhir/401_unauthorized.yaml'
+
+    Forbidden:
+      description: Forbidden (insufficient scopes or policy).
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema:
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            forbiddenError:
+              $ref: '../../examples/errors/non-fhir/403_forbidden.yaml'
+
+    ServiceUnavailable:
+      description: Connectivity error.
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema:
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            connectivityError:
+              $ref: '../../examples/errors/non-fhir/503_service_unavailable.yaml'
+
+    GatewayTimeout:
+      description: Timeout error.
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema: 
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            timeOutError:
+              $ref: '../../examples/errors/non-fhir/504_gateway_timeout.yaml'
+
+    InternalServerError:
+      description: Server error.
+      headers:
+        Content-Security-Policy:
+          description: Prevents the page from being framed and restricts content sources
+          schema:
+            type: string
+          example: "frame-ancestors 'none'; default-src 'self'"
+        X-Content-Type-Options:
+          description: Prevents MIME type sniffing
+          schema:
+            type: string
+          example: "nosniff"
+        Cache-Control:
+          description: Prevents caching of responses
+          schema:
+            type: string
+          example: "no-store"
+        Referrer-Policy:
+          description: Controls how much referrer information is sent
+          schema:
+            type: string
+          example: "strict-origin-when-cross-origin"
+      content:
+        application/json:
+          schema: 
+            $ref: 'api-response.yaml#/components/schemas/ErrorResponse' 
+          examples:
+            internalServerError:
+              $ref: '../../examples/errors/non-fhir/500_internal_server_error.yaml'

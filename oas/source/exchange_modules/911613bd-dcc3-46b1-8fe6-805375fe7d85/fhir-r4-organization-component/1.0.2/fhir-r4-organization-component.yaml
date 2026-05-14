@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Organization Base
+  version: '1.0'
+paths: {}
+components:
+  schemas:
+    Organization:
+      description: 'This profile sets minimum expectations for the Organization resource\ to searching for and fetching a Organization associated with a patient or\ provider. It identifies which core elements, extensions, vocabularies and\ value sets SHALL be present in the resource when using this profile.\n\nExample Usage Scenarios:\n\nThe following are example usage scenarios for\ the US Core-Organization profile:\n\nQuery by organization name or NPI\nMandatory and Must Support Data Elements\nThe following data-elements are\ mandatory (i.e data MUST be present) or must be supported if the data is\ present in the sending system (Must Support definition). They are presented\ below in a simple human-readable explanation. Profile specific guidance\ and examples are provided as well. The Formal Profile Definition below provides\ the formal summary, definitions, and terminology requirements.\n\nEach Organization\ must have:\n\nA status of the organization\nA name\nEach Organization must\ support:\n\nAn identifier\nNational Provider Identifier (NPI) for organizations\nClinical Laboratory Improvement Amendments (CLIA) for laboratories.\nA list\ of contact information\nProfile specific implementation guidance:\n\nnone\nExamples\nOrganization-acme-lab\n\nOrganization-with-EndPoint\n\nFormal Views\ of Profile Content\nDescription of Profiles, Differentials, and Snapshots.\n\nA grouping of people or organizations with a\ common purpose\n+ Rule: The\ organization SHALL at least have a name or an identifier, and possibly more\ than one\nElements defined in Ancestors: id, meta, implicitRules, language,\ntext, contained, extension, modifierExtension      \n'
+      type: object
+      allOf:
+        - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/DomainResource'      
+      properties:  
+        identifier:
+          description: Identifies this organization across multiple systems
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Identifier'        
+        active:
+          description: Whether the organization's record is still in active use
+          type: boolean
+        type:
+          description: Kind of organization
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        name:
+          description: Name used for the organization
+          type: string
+        alias:
+          description: A list of alternate names that the organization is known as, or was known as in the past
+          type: array
+          items:
+            type: string
+        telecom:
+          description: A contact detail for the organization
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/ContactPoint'
+        address:
+          description: An address for the organization
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Address'
+        partOf:
+          description: |
+            Reference(Organization)The organization of which this organization forms a part
+          $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'        
+        endpoint:
+          description: Reference(Endpoint)Technical endpoints providing access to services operated for the organization
+          type: array
+          items:
+            $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        contact:
+          description: Contact for the organization for a certain purpose
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/BackboneElement'
+            properties:
+              purpose:
+                description: The type of contact\nBinding ContactEntityType (extensible)\n
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'              
+              name:
+                description: A name associated with the contact
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/HumanName'
+              telecom:
+                description: Contact details (e.g. email or phone)
+                type: array
+                items:
+                  $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/ContactPoint'
+              address:
+                description: Visiting or postal addresses for the contact
+                $ref: '../../../../exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.7/fhir-r4-common-components.yaml#/components/schemas/Address'

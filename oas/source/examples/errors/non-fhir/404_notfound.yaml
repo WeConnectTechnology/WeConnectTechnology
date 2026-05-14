@@ -1,0 +1,16 @@
+value:
+  header:
+    transactionId: abcd1234-5678-90ef-abcd-1234567890ef
+    messageId: 11112222-3333-4444-5555-666677778888
+    creationDateTimeStamp: "2025-09-20T14:55:00Z"
+    uniqueIdentifier: REQ_UNKNOWN_RESOURCE
+  eventDetail:
+    - errorItemType: ERROR
+      errorCode: "1404"
+      errorMessage: APIKIT:NOT_FOUND
+      errorDetail: >
+        APIKit error (Not found): Resource not found.
+        Additional details - 'Path /patients/unknown does not exist'
+        | httpStatus=404; serviceName=patients-experience-api;
+        path=/patients/unknown
+

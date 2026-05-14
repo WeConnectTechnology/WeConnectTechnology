@@ -1,0 +1,65 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FHIR R4 Slot US Core
+
+paths: {}
+
+components:
+  schemas:
+    Slot:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          enum: [Slot]
+        identifier:
+          description: External Ids for this item
+          type: array
+          items:
+            $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/Identifier'
+        serviceCategory:
+          description: A broad categorization of the service that is to be performed during this appointment
+          type: array
+          items:
+            $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        serviceType:
+          description: |
+            The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which  is at a location, rather than the location itself). 
+            If provided then this overrides the value provided on the availability resource
+          type: array
+          items:
+            $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        specialty:
+          description: The specialty of a practitioner that would be required to perform the service requested in this appointment
+          type: array
+          items:
+            $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        appointmentType:
+          description: The style of appointment or patient that may be booked in the slot (not service type)
+          $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/CodeableConcept'
+        schedule:
+          description: The schedule resource that this slot defines an interval of status information
+          $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/Reference'
+        status:
+          description: busy | free | busy-unavailable | busy-tentative | entered-in-error
+          $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/code'
+        start:
+          description: Date/Time that the slot is to begin
+          $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/instant'
+        end:
+          description: Date/Time that the slot is to conclude
+          $ref: '/exchange_modules/911613bd-dcc3-46b1-8fe6-805375fe7d85/fhir-r4-common-components/1.0.5/fhir-r4-common-components.yaml#/components/schemas/instant'
+        overbooked:
+          description: This slot has already been overbooked, appointments are unlikely to be accepted for this time
+          type: boolean
+        comment:
+          description: Comments on the slot to describe any extended information. Such as custom constraints on the slot
+          type: string
+      required:
+        - resourceType
+        - schedule
+        - status
+        - start
+        - end
+
