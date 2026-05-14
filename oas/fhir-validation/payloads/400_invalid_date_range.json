@@ -1,0 +1,13 @@
+{
+  "resourceType": "OperationOutcome",
+  "id": "6007",
+  "issue": [
+    {
+      "severity": "error",
+      "code": "invalid",
+      "details": {
+        "text": "FromDate must be earlier than or equal to toDate."
+      }
+    }
+  ]
+}

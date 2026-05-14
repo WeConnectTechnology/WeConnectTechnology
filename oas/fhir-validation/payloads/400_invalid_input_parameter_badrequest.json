@@ -1,0 +1,13 @@
+{
+  "resourceType": "OperationOutcome",
+  "id": "6000",
+  "issue": [
+    {
+      "severity": "error",
+      "code": "invalid",
+      "details": {
+        "text": "Invalid input parameter."
+      }
+    }
+  ]
+}

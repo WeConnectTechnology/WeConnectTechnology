@@ -1,0 +1,13 @@
+{
+  "resourceType": "OperationOutcome",
+  "id": "6004",
+  "issue": [
+    {
+      "severity": "error",
+      "code": "transient",
+      "details": {
+        "text": "Connectivity issue with external system"
+      }
+    }
+  ]
+}
